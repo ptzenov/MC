@@ -1,0 +1,4 @@
+v                                   = [  0.68 -0.211  0.566]^T
+h.homogeneous()                     = [  0.68 -0.211  0.566      1]^T
+(P * v.homogeneous())               = [  1.27  0.772 0.0154 -0.419]^T
+(P * v.homogeneous()).hnormalized() = [  -3.03   -1.84 -0.0367]^T

@@ -1,0 +1,17 @@
+Roots:  0.680375 -0.211234  0.566198   0.59688  0.823295
+Complex roots: (-0.211234,0)  (0.566198,0)   (0.59688,0)  (0.680375,0)  (0.823295,0)
+Real roots: -0.211234  0.566198   0.59688  0.680375  0.823295
+
+Illustration of the convergence problem with the QR algorithm: 
+---------------------------------------------------------------
+Hard case polynomial defined by floats:   -0.957   0.9219   0.3516   0.9453  -0.4023  -0.5508 -0.03125
+Complex roots:           (1.19707,0)           (0.70514,0)           (-1.9834,0)  (-0.396563,0.966801) (-0.396563,-0.966801)          (-16.7513,0)
+Norms of the evaluations of the polynomial at the roots: 3.08019e-06 2.98023e-07 2.10915e-05 5.35758e-07 5.35758e-07           0
+
+Using double's almost always solves the problem for small degrees: 
+-------------------------------------------------------------------
+Complex roots:           (1.19707,0)           (0.70514,0)           (-1.9834,0)  (-0.396564,0.966801) (-0.396564,-0.966801)          (-16.7513,0)
+Norms of the evaluations of the polynomial at the roots: 3.78175e-07           0  2.0411e-06 2.48518e-07 2.48518e-07           0
+
+The last root in float then in double: (-16.75128174,0)	(-16.75128099,0)
+Norm of the difference: 0

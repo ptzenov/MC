@@ -1,0 +1,14 @@
+Here is the matrix m:
+   0.68   0.597   -0.33   0.108   -0.27
+ -0.211   0.823   0.536 -0.0452  0.0268
+  0.566  -0.605  -0.444   0.258   0.904
+Here is a matrix whose columns form a basis of the kernel of m:
+ -0.219   0.763
+0.00335  -0.447
+      0       1
+      1       0
+ -0.145  -0.285
+By definition of the kernel, m*ker is zero:
+ 7.45e-09  1.49e-08
+-1.86e-09 -4.05e-08
+        0 -2.98e-08

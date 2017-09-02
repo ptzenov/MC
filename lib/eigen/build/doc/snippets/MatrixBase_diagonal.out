@@ -1,0 +1,8 @@
+Here is the matrix m:
+ 7  6 -3
+-2  9  6
+ 6 -6 -5
+Here are the coefficients on the main diagonal of m:
+ 7
+ 9
+-5

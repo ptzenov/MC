@@ -1,0 +1,9 @@
+Here is the matrix A:
+ 1  2  1
+ 2  1  0
+-1  1  2
+The determinant of A is -3
+The inverse of A is:
+-0.667      1  0.333
+  1.33     -1 -0.667
+    -1      1      1

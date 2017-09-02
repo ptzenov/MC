@@ -1,0 +1,8 @@
+Here is the vector v:
+ 7
+-2
+ 6
+v.rowwise().replicate(5) = ...
+ 7  7  7  7  7
+-2 -2 -2 -2 -2
+ 6  6  6  6  6

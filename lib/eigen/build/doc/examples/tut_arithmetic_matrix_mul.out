@@ -1,0 +1,17 @@
+Here is mat*mat:
+ 7 10
+15 22
+Here is mat*u:
+1
+1
+Here is u^T*mat:
+2 2
+Here is u^T*v:
+-2
+Here is u*v^T:
+-2 -0
+ 2  0
+Let's multiply mat by itself
+Now mat is mat:
+ 7 10
+15 22

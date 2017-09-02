@@ -1,0 +1,13 @@
+Here is the matrix m:
+1 0 0 0
+0 2 0 0
+0 0 3 0
+0 0 0 4
+Here is m.fixed<2, 2>(2, 2):
+3 0
+0 4
+Now the matrix m is:
+1 0 0 0
+0 2 0 0
+3 0 3 0
+0 4 0 4

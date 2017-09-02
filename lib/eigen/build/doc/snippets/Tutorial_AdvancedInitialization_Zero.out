@@ -1,0 +1,14 @@
+A fixed-size array:
+0 0 0
+0 0 0
+0 0 0
+
+A one-dimensional dynamic-size array:
+0
+0
+0
+
+A two-dimensional dynamic-size array:
+0 0 0 0
+0 0 0 0
+0 0 0 0

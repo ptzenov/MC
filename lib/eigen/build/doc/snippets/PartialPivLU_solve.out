@@ -1,0 +1,13 @@
+Here is the invertible matrix A:
+  0.68  0.597  -0.33
+-0.211  0.823  0.536
+ 0.566 -0.605 -0.444
+Here is the matrix B:
+  0.108   -0.27
+-0.0452  0.0268
+  0.258   0.904
+Here is the (unique) solution X to the equation AX=B:
+ 0.609   2.68
+-0.231  -1.57
+  0.51   3.51
+Relative error: 3.28e-16

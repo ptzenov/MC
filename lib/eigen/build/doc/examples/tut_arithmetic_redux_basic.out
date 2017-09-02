@@ -1,0 +1,6 @@
+Here is mat.sum():       10
+Here is mat.prod():      24
+Here is mat.mean():      2.5
+Here is mat.minCoeff():  1
+Here is mat.maxCoeff():  4
+Here is mat.trace():     5

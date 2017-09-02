@@ -1,0 +1,6 @@
+Here is the vector v:
+ 7 -2  6  6
+Here is v.head(2):
+ 7 -2
+Now the vector v is:
+0 0 6 6

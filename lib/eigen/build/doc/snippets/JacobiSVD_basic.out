@@ -1,0 +1,21 @@
+Here is the matrix m:
+  0.68  0.597
+-0.211  0.823
+ 0.566 -0.605
+Its singular values are:
+ 1.19
+0.899
+Its left singular vectors are the columns of the thin U matrix:
+  0.388   0.866
+  0.712 -0.0634
+ -0.586   0.496
+Its right singular vectors are the columns of the thin V matrix:
+-0.183  0.983
+ 0.983  0.183
+Now consider this rhs vector:
+1
+0
+0
+A least-squares solution of m*x = rhs is:
+0.888
+0.496

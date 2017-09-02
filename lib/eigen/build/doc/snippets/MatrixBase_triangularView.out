@@ -1,0 +1,16 @@
+Here is the matrix m:
+ 7  6 -3
+-2  9  6
+ 6 -6 -5
+Here is the upper-triangular matrix extracted from m:
+ 7  6 -3
+ 0  9  6
+ 0  0 -5
+Here is the strictly-upper-triangular matrix extracted from m:
+ 0  6 -3
+ 0  0  6
+ 0  0  0
+Here is the unit-lower-triangular matrix extracted from m:
+ 1  0  0
+-2  1  0
+ 6 -6  1

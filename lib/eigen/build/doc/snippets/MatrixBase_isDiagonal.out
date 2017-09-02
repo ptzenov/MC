@@ -1,0 +1,6 @@
+Here's the matrix m:
+1e+04     0     1
+    0 1e+04     0
+    0     0 1e+04
+m.isDiagonal() returns: 0
+m.isDiagonal(1e-3) returns: 1

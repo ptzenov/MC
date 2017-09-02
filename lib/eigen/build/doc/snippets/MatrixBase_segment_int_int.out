@@ -1,0 +1,6 @@
+Here is the vector v:
+ 7 -2  6  6
+Here is v.segment(1, 2):
+-2  6
+Now the vector v is:
+7 0 0 6

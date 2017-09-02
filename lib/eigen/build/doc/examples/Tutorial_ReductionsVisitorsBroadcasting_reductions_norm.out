@@ -1,0 +1,9 @@
+v.squaredNorm() = 5
+v.norm() = 2.23607
+v.lpNorm<1>() = 3
+v.lpNorm<Infinity>() = 2
+
+m.squaredNorm() = 30
+m.norm() = 5.47723
+m.lpNorm<1>() = 10
+m.lpNorm<Infinity>() = 4

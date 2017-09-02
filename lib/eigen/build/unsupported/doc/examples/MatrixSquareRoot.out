@@ -1,0 +1,11 @@
+The matrix A is:
+      0.5 -0.866025
+ 0.866025       0.5
+
+The matrix square root of A is:
+0.866025     -0.5
+     0.5 0.866025
+
+The square of the last matrix is:
+      0.5 -0.866025
+ 0.866025       0.5

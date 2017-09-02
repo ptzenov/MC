@@ -1,0 +1,5 @@
+CG:       #iterations: 20, estimated error: 8.86333e-14
+BiCGSTAB: #iterations: 20, estimated error: 2.10809e-15
+GMRES:    #iterations: 10, estimated error: 0
+DGMRES:   #iterations: 20, estimated error: 1.10455e-28
+MINRES:   #iterations: 20, estimated error: 2.94473e-14

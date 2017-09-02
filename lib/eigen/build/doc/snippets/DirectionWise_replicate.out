@@ -1,0 +1,10 @@
+Here is the matrix m:
+ 7  6  9
+-2  6 -6
+m.colwise().replicate<3>() = ...
+ 7  6  9
+-2  6 -6
+ 7  6  9
+-2  6 -6
+ 7  6  9
+-2  6 -6

@@ -1,0 +1,10 @@
+Here is the matrix m:
+  0.68  0.566  0.823
+-0.211  0.597 -0.605
+Here is the matrix y:
+ -0.33 -0.444
+ 0.536  0.108
+Here is a solution x to the equation mx=y:
+     0      0
+ 0.291 -0.216
+  -0.6 -0.391

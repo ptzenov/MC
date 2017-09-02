@@ -1,0 +1,6 @@
+Here's the matrix m:
+1 1 1
+1 1 1
+1 1 1
+m.isOnes() returns: 0
+m.isOnes(1e-3) returns: 1

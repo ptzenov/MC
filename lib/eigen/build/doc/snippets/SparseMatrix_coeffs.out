@@ -1,0 +1,9 @@
+The matrix A is:
+0 1 0
+0 0 0
+2 0 0
+it has 3 stored non zero coefficients that are: 2 1 0
+After adding 10 to every stored non zero coefficient, the matrix A is:
+ 0 11  0
+ 0  0 10
+12  0  0

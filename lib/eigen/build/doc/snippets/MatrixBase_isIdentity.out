@@ -1,0 +1,6 @@
+Here's the matrix m:
+     1      0 0.0001
+     0      1      0
+     0      0      1
+m.isIdentity() returns: 0
+m.isIdentity(1e-3) returns: 1

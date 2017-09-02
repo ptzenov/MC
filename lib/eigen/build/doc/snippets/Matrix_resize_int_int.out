@@ -1,0 +1,11 @@
+here's the 2x3 matrix m:
+1 2 3
+4 5 6
+let's resize m to 3x2. This is a conservative resizing because 2*3==3*2.
+here's the 3x2 matrix m:
+1 5
+4 3
+2 6
+now let's resize m to size 2x2. This is NOT a conservative resizing, so it becomes uninitialized:
+7.41e-317 2.12e-314
+4.94e-324 4.94e-323

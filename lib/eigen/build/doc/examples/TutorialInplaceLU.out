@@ -1,0 +1,32 @@
+[init]
+Here is the input matrix A before decomposition:
+ 2 -1
+ 1  3
+[init]
+[declaration]
+Here is the input matrix A after decomposition:
+  2  -1
+0.5 3.5
+[declaration]
+[matrixLU]
+Here is the matrix storing the L and U factors:
+  2  -1
+0.5 3.5
+[matrixLU]
+[solve]
+Residual: 0
+[solve]
+[modifyA]
+Residual: 15.8114
+[modifyA]
+[recompute]
+Residual: 0
+[recompute]
+[recompute_bis0]
+Here is the input matrix A1 after decomposition:
+ 5 -2
+ 3  4
+[recompute_bis0]
+[recompute_bis1]
+Residual: 2.48253e-16
+[recompute_bis1]

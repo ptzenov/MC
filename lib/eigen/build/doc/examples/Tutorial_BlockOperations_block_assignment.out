@@ -1,0 +1,18 @@
+Here is the array a:
+0.6 0.6 0.6 0.6
+0.6 0.6 0.6 0.6
+0.6 0.6 0.6 0.6
+0.6 0.6 0.6 0.6
+
+Here is now a with m copied into its central 2x2 block:
+0.6 0.6 0.6 0.6
+0.6   1   2 0.6
+0.6   3   4 0.6
+0.6 0.6 0.6 0.6
+
+Here is now a with bottom-right 2x3 block copied into top-left 2x2 block:
+  3   4 0.6 0.6
+0.6 0.6 0.6 0.6
+0.6   3   4 0.6
+0.6 0.6 0.6 0.6
+

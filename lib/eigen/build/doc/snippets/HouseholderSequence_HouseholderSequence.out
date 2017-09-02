@@ -1,0 +1,29 @@
+The matrix v is:
+  0.68  0.597  -0.33
+-0.211  0.823  0.536
+ 0.566 -0.605 -0.444
+The first Householder vector is: v_0 =      1 -0.211  0.566
+The second Householder vector is: v_1 =      0      1 -0.605
+The third Householder vector is: v_2 = 0 0 1
+The Householder coefficients are: h =   0.108 -0.0452   0.258
+The first Householder reflection is represented by H_0 = 
+  0.892  0.0228 -0.0611
+ 0.0228   0.995  0.0129
+-0.0611  0.0129   0.965
+The second Householder reflection is represented by H_1 = 
+      1       0       0
+      0    1.05 -0.0273
+      0 -0.0273    1.02
+The third Householder reflection is represented by H_2 = 
+    1     0     0
+    0     1     0
+    0     0 0.742
+Their product is H_0 H_1 H_2 = 
+  0.892  0.0255 -0.0466
+ 0.0228    1.04 -0.0105
+-0.0611 -0.0129   0.728
+If we construct a HouseholderSequence from v and h
+and convert it to a matrix, we get:
+  0.892  0.0255 -0.0466
+ 0.0228    1.04 -0.0105
+-0.0611 -0.0129   0.728

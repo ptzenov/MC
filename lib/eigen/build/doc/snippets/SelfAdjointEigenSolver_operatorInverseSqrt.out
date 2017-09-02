@@ -1,0 +1,16 @@
+Here is a random positive-definite matrix, A:
+  1.41 -0.697 -0.111  0.508
+-0.697  0.423 0.0991   -0.4
+-0.111 0.0991   1.25  0.902
+ 0.508   -0.4  0.902    1.4
+
+The inverse square root of A is: 
+  1.88   2.78 -0.546  0.605
+  2.78   8.61   -2.3   2.74
+-0.546   -2.3   1.92  -1.36
+ 0.605   2.74  -1.36   2.18
+We can also compute it with operatorSqrt() and inverse(). That yields: 
+  1.88   2.78 -0.546  0.605
+  2.78   8.61   -2.3   2.74
+-0.546   -2.3   1.92  -1.36
+ 0.605   2.74  -1.36   2.18

@@ -1,0 +1,30 @@
+nfft=840
+   float
+     scalar roundtrip rmse: 1.15328e-13
+    complex roundtrip rmse: 1.41001e-13
+   double
+     scalar roundtrip rmse: 1.82717e-31
+    complex roundtrip rmse: 1.88294e-31
+   long double
+     scalar roundtrip rmse: 8.13153e-33
+    complex roundtrip rmse: 8.13213e-33
+nfft=7200
+   float
+     scalar roundtrip rmse: 1.3001e-13
+    complex roundtrip rmse: 1.37835e-13
+   double
+     scalar roundtrip rmse: 3.47805e-31
+    complex roundtrip rmse: 3.59175e-31
+   long double
+     scalar roundtrip rmse: 8.39949e-37
+    complex roundtrip rmse: 8.56513e-37
+nfft=1024
+   float
+     scalar roundtrip rmse: 3.79333e-14
+    complex roundtrip rmse: 3.2397e-14
+   double
+     scalar roundtrip rmse: 1.16828e-31
+    complex roundtrip rmse: 1.12652e-31
+   long double
+     scalar roundtrip rmse: 2.9268e-38
+    complex roundtrip rmse: 2.99321e-38

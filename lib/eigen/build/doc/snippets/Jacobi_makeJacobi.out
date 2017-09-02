@@ -1,0 +1,6 @@
+Here is the matrix m:
+ 1.36 0.355
+0.355  1.19
+Here is the matrix J' * m * J:
+ 1.64     0
+    0 0.913

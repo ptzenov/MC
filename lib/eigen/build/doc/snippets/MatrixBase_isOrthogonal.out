@@ -1,0 +1,10 @@
+Here's the vector v:
+1
+0
+0
+Here's the vector w:
+0.0001
+     0
+     1
+v.isOrthogonal(w) returns: 0
+v.isOrthogonal(w,1e-3) returns: 1

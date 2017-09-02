@@ -1,0 +1,15 @@
+Here is the array a:
+ 7  9 -5 -3
+-2 -6  1  0
+ 6 -3  0  9
+ 6  6  3  9
+Here is a.rightCols(2):
+-5 -3
+ 1  0
+ 0  9
+ 3  9
+Now the array a is:
+ 7  9  0  0
+-2 -6  0  0
+ 6 -3  0  0
+ 6  6  0  0

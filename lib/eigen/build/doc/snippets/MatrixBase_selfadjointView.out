@@ -1,0 +1,12 @@
+Here is the matrix m:
+ 7  6 -3
+-2  9  6
+ 6 -6 -5
+Here is the symmetric matrix extracted from the upper part of m:
+ 7  6 -3
+ 6  9  6
+-3  6 -5
+Here is the symmetric matrix extracted from the lower part of m:
+ 7 -2  6
+-2  9 -6
+ 6 -6 -5

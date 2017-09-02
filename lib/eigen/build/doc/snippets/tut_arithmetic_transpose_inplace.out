@@ -1,0 +1,7 @@
+Here is the initial matrix a:
+1 2 3
+4 5 6
+and after being transposed:
+1 4
+2 5
+3 6

@@ -1,0 +1,9 @@
+Here is a random symmetric 4x4 matrix:
+   1.36   0.612   0.122   0.326
+  0.612   -1.21  -0.222   0.563
+  0.122  -0.222 -0.0904    1.16
+  0.326   0.563    1.16    1.66
+The vector of Householder coefficients is:
+1.87
+1.24
+   0

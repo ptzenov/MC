@@ -1,0 +1,183 @@
+Performing C++ SOURCE FILE Test COMPILER_SUPPORT_Wshorten64to32 failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec698446982/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec698446982.dir/build.make CMakeFiles/cmTryCompileExec698446982.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec698446982.dir/src.cxx.o
+/usr/bin/c++    -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -DCOMPILER_SUPPORT_Wshorten64to32 -Werror   -Wshorten-64-to-32 -o CMakeFiles/cmTryCompileExec698446982.dir/src.cxx.o -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-Wshorten-64-to-32'
+CMakeFiles/cmTryCompileExec698446982.dir/build.make:57: recipe for target 'CMakeFiles/cmTryCompileExec698446982.dir/src.cxx.o' failed
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+make[1]: *** [CMakeFiles/cmTryCompileExec698446982.dir/src.cxx.o] Error 1
+Makefile:118: recipe for target 'cmTryCompileExec698446982/fast' failed
+make: *** [cmTryCompileExec698446982/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test COMPILER_SUPPORT_Wenumconversion failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3844518428/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3844518428.dir/build.make CMakeFiles/cmTryCompileExec3844518428.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec3844518428.dir/src.cxx.o
+/usr/bin/c++    -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -Wlogical-op -DCOMPILER_SUPPORT_Wenumconversion -Werror   -Wenum-conversion -o CMakeFiles/cmTryCompileExec3844518428.dir/src.cxx.o -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-Wenum-conversion'
+CMakeFiles/cmTryCompileExec3844518428.dir/build.make:57: recipe for target 'CMakeFiles/cmTryCompileExec3844518428.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTryCompileExec3844518428.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+Makefile:118: recipe for target 'cmTryCompileExec3844518428/fast' failed
+make: *** [cmTryCompileExec3844518428/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test COMPILER_SUPPORT_Wcpp11extensions failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec202734763/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec202734763.dir/build.make CMakeFiles/cmTryCompileExec202734763.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec202734763.dir/src.cxx.o
+/usr/bin/c++    -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -Wlogical-op -DCOMPILER_SUPPORT_Wcpp11extensions -Werror   -Wc++11-extensions -o CMakeFiles/cmTryCompileExec202734763.dir/src.cxx.o -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-Wc++11-extensions'
+CMakeFiles/cmTryCompileExec202734763.dir/build.make:57: recipe for target 'CMakeFiles/cmTryCompileExec202734763.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTryCompileExec202734763.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+Makefile:118: recipe for target 'cmTryCompileExec202734763/fast' failed
+make: *** [cmTryCompileExec202734763/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test COMPILER_SUPPORT_wd981 failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2887615059/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2887615059.dir/build.make CMakeFiles/cmTryCompileExec2887615059.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2887615059.dir/src.cxx.o
+/usr/bin/c++    -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -Wlogical-op -Wdouble-promotion -Wno-psabi -Wno-variadic-macros -Wno-long-long -fno-check-new -fno-common -fstrict-aliasing -DCOMPILER_SUPPORT_wd981 -Werror   -wd981 -o CMakeFiles/cmTryCompileExec2887615059.dir/src.cxx.o -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-wd981'
+CMakeFiles/cmTryCompileExec2887615059.dir/build.make:57: recipe for target 'CMakeFiles/cmTryCompileExec2887615059.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTryCompileExec2887615059.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+Makefile:118: recipe for target 'cmTryCompileExec2887615059/fast' failed
+make: *** [cmTryCompileExec2887615059/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test COMPILER_SUPPORT_wd2304 failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec1563740394/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1563740394.dir/build.make CMakeFiles/cmTryCompileExec1563740394.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1563740394.dir/src.cxx.o
+/usr/bin/c++    -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -Wlogical-op -Wdouble-promotion -Wno-psabi -Wno-variadic-macros -Wno-long-long -fno-check-new -fno-common -fstrict-aliasing -DCOMPILER_SUPPORT_wd2304 -Werror   -wd2304 -o CMakeFiles/cmTryCompileExec1563740394.dir/src.cxx.o -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-wd2304'
+CMakeFiles/cmTryCompileExec1563740394.dir/build.make:57: recipe for target 'CMakeFiles/cmTryCompileExec1563740394.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTryCompileExec1563740394.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+Makefile:118: recipe for target 'cmTryCompileExec1563740394/fast' failed
+make: *** [cmTryCompileExec1563740394/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test COMPILER_SUPPORT_STRICTANSI failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec2765102774/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2765102774.dir/build.make CMakeFiles/cmTryCompileExec2765102774.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec2765102774.dir/src.cxx.o
+/usr/bin/c++    -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -Wlogical-op -Wdouble-promotion -Wno-psabi -Wno-variadic-macros -Wno-long-long -fno-check-new -fno-common -fstrict-aliasing -DCOMPILER_SUPPORT_STRICTANSI -Werror   -strict-ansi -o CMakeFiles/cmTryCompileExec2765102774.dir/src.cxx.o -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-strict-ansi'
+CMakeFiles/cmTryCompileExec2765102774.dir/build.make:57: recipe for target 'CMakeFiles/cmTryCompileExec2765102774.dir/src.cxx.o' failed
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+make[1]: *** [CMakeFiles/cmTryCompileExec2765102774.dir/src.cxx.o] Error 1
+Makefile:118: recipe for target 'cmTryCompileExec2765102774/fast' failed
+make: *** [cmTryCompileExec2765102774/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test COMPILER_SUPPORT_Qunusedarguments failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec491028961/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec491028961.dir/build.make CMakeFiles/cmTryCompileExec491028961.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec491028961.dir/src.cxx.o
+/usr/bin/c++    -pedantic -Wall -Wextra -Wundef -Wcast-align -Wchar-subscripts -Wnon-virtual-dtor -Wunused-local-typedefs -Wpointer-arith -Wwrite-strings -Wformat-security -Wlogical-op -Wdouble-promotion -Wno-psabi -Wno-variadic-macros -Wno-long-long -fno-check-new -fno-common -fstrict-aliasing -DCOMPILER_SUPPORT_Qunusedarguments -Werror   -Qunused-arguments -o CMakeFiles/cmTryCompileExec491028961.dir/src.cxx.o -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-Qunused-arguments'
+CMakeFiles/cmTryCompileExec491028961.dir/build.make:57: recipe for target 'CMakeFiles/cmTryCompileExec491028961.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTryCompileExec491028961.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+Makefile:118: recipe for target 'cmTryCompileExec491028961/fast' failed
+make: *** [cmTryCompileExec491028961/fast] Error 2
+
+Source file was:
+int main() { return 0; }
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3251215654/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3251215654.dir/build.make CMakeFiles/cmTryCompileExec3251215654.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3251215654.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3251215654.dir/CheckSymbolExists.c.o   -c /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec3251215654
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3251215654.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec3251215654.dir/CheckSymbolExists.c.o  -o cmTryCompileExec3251215654 -rdynamic 
+CMakeFiles/cmTryCompileExec3251215654.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTryCompileExec3251215654.dir/build.make:88: recipe for target 'cmTryCompileExec3251215654' failed
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec3251215654] Error 1
+Makefile:118: recipe for target 'cmTryCompileExec3251215654/fast' failed
+make: *** [cmTryCompileExec3251215654/fast] Error 2
+
+File /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec3726095163/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3726095163.dir/build.make CMakeFiles/cmTryCompileExec3726095163.dir/build
+make[1]: Entering directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3726095163.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTryCompileExec3726095163.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.0/Modules/CheckFunctionExists.c
+Linking C executable cmTryCompileExec3726095163
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec3726095163.dir/link.txt --verbose=1
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTryCompileExec3726095163.dir/CheckFunctionExists.c.o  -o cmTryCompileExec3726095163 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTryCompileExec3726095163.dir/build.make:88: recipe for target 'cmTryCompileExec3726095163' failed
+make[1]: Leaving directory '/home/kenny/Documents/workspaces/C++/MC/lib/eigen/build/CMakeFiles/CMakeTmp'
+make[1]: *** [cmTryCompileExec3726095163] Error 1
+Makefile:118: recipe for target 'cmTryCompileExec3726095163/fast' failed
+make: *** [cmTryCompileExec3726095163/fast] Error 2
+
+

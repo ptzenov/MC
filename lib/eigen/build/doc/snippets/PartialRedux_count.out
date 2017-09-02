@@ -1,0 +1,8 @@
+Here is the matrix m:
+  0.68  0.597  -0.33
+-0.211  0.823  0.536
+ 0.566 -0.605 -0.444
+Here is the count of elements larger or equal than 0.5 of each row:
+2
+2
+1

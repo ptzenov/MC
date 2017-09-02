@@ -1,0 +1,12 @@
+Here is the matrix m:
+  0.68  0.566
+-0.211  0.597
+Now we want to copy a column into a row.
+If we do m.col(1) = m.row(0), then m becomes:
+  0.68   0.68
+-0.211   0.68
+which is wrong!
+Now let us instead do m.col(1) = m.row(0).eval(). Then m becomes
+  0.68   0.68
+-0.211  0.566
+which is right.

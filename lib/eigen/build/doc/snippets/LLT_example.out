@@ -1,0 +1,13 @@
+The matrix A is
+ 4 -1  2
+-1  6  0
+ 2  0  5
+The Cholesky factor L is
+    2     0     0
+ -0.5   2.4     0
+    1 0.209  1.99
+To check this, let us compute L * L.transpose()
+ 4 -1  2
+-1  6  0
+ 2  0  5
+This should equal the matrix A

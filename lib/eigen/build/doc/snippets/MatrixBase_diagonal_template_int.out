@@ -1,0 +1,8 @@
+Here is the matrix m:
+ 7  9 -5 -3
+-2 -6  1  0
+ 6 -3  0  9
+ 6  6  3  9
+Here are the coefficients on the 1st super-diagonal and 2nd sub-diagonal of m:
+9 1 9
+6 6

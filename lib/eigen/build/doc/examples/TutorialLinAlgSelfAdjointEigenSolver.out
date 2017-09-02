@@ -1,0 +1,10 @@
+Here is the matrix A:
+1 2
+2 3
+The eigenvalues of A are:
+-0.236
+  4.24
+Here's a matrix whose columns are eigenvectors of A 
+corresponding to these eigenvalues:
+-0.851 -0.526
+ 0.526 -0.851
