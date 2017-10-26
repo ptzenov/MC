@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11    CMakeFiles/MC01.dir/src/main.cpp.o CMakeFiles/MC01.dir/src/CheckersState.cpp.o CMakeFiles/MC01.dir/src/spsolver.cpp.o  -o MC01 -rdynamic 

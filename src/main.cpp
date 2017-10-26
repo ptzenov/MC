@@ -1,26 +1,34 @@
 #include "Loop.hpp"
+
+#include "CheckersState.hpp"
 #include <iostream>
-#include <Eigen/Dense>
 
-using Eigen::MatrixXd;
 
-int main(int argc, char** argv){
+int main(int argc, char** argv)
+{
 
-	int num_particles = 8;
-	int Nt = 10000; 
-	double T = 10; 
+        int num_particles = 8;
+        int Nt = 10000;
+        int Nx = 10;
+        int Ny = 10;
 
-	main_checkers_loop(num_particles,Nt, T);
-	std::cout<<"Bubye"<<"\n";
-
-	/**
-	  MatrixXd m(2,2);
-	  m(0,0) = 3;
-	  m(1,0) = 2.5;
-	  m(0,1) = -1;
-	  m(1,1) = m(1,0) + m(0,1);
-	  std::cout << m << std::endl;
-	 **/
-
+        double T = 10.0f;
+        std::vector<MC::CheckersState> states;
+        
+	for (auto x= 0; x <Nx; x++)
+                for (auto y=0; y< Ny; y++)
+                        states.push_back(MC::CheckersState(x,y));
+	
+	MC::CheckersInfo info(Nx,Ny,num_particles,Nt,T);
+        using scatter_t = bool(*)(MC::CheckersState&,MC::CheckersState&, MC::CheckersInfo&);
+	std::vector<scatter_t> scatterers;
+       	scatterers.push_back(&MC::scatter_checkers);
+	std::cout << "scatterrs size is " << scatterers.size() << std::endl;
+	MC::main_loop(states.begin(),states.end(),scatterers,info,
+			num_particles, Nt,T);
+        std::cout<<"Bubye"<<"\n";
 }
+
+
+
 
