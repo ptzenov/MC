@@ -13,15 +13,14 @@ void MC::CheckersState::print_state()
 bool MC::scatter_checkers(MC::CheckersState& init, MC::CheckersState& fin, MC::CheckersInfo&  info)
 {
 
-	
-	int Nx = info.get_Nx();
+        int Nx = info.get_Nx();
         int Ny = info.get_Ny();
-        // do not change anything !
+        
+	// do not change anything !
         if ( &init == &fin)
                 return false;
 
         // can only go on un_occupied state!
-
         if(fin.get_pID() != EMPTY )
                 return false;
 
@@ -35,7 +34,7 @@ bool MC::scatter_checkers(MC::CheckersState& init, MC::CheckersState& fin, MC::C
 
         int dx = ix-fx;
         int dy = iy-fy;
-	// Keep in mind the principle of detailed balance!
+        // Keep in mind the principle of detailed balance!
         if (DIAGONAL)
         {
                 // allows diagonal transitions
@@ -87,10 +86,14 @@ bool MC::scatter_checkers(MC::CheckersState& init, MC::CheckersState& fin, MC::C
         //draw a uniform random num from 0 to 1 over 1000 bins
         if (draw_random_uniform_double<std::mt19937,double>(0.,1.) < s_prob)
         {
+		auto tmp = init.get_pID(); 
+		init.set_pID(fin.get_pID());
+		fin.set_pID(tmp);
 		return true;
         }
         return false;
 }
+
 
 
 

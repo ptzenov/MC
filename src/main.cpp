@@ -1,7 +1,5 @@
 #include <iostream>
-
 #include <vector>
-#include <algorithm>
 
 #include "spsolver.hpp"
 #include "Loop.hpp"
@@ -9,29 +7,15 @@
 
 int main(int argc, char** argv)
 {
-        
 
-	using ArrayNd = Eigen::Array<double,1,Eigen::Dynamic>;
-	ArrayNd test; 
-	size_t N = 5; 
-	
-	test = ArrayNd::Zero(N);
-	test(0) = 42.0f;
-	test(1) = 123.0f; 
-	test(2) = 4.0f; 
-	test(3) = 11.0f; 
-	test(4) = -123.0f; 
-	
-	std::cout << "unsorted array:\n" << test << "\n"; 
-	
-	auto idx = MC::partial_sort_idx(test.data(),3,N); 
-	std::cout << "first 3 indices are " << idx[0] << " " << idx[1] << " " << idx[2] << std::endl;  
-		
-	return 0; 	
-/*
+
+using ArrayNd = Eigen::Array<double,1,Eigen::Dynamic>;
+
+
 	int num_particles = 8;
-        int Nt = 10000;
-        int Nx = 10;
+
+	int Nt = 100000;
+        int Nx = 20;
         int Ny = 10;
 
         double T = 10.0f;
@@ -50,7 +34,7 @@ int main(int argc, char** argv)
 	MC::main_loop(states.begin(),states.end(),scatterers,info,
 			num_particles, Nt,T);
         std::cout<<"Bubye"<<"\n";
-*/	
+
 }
 
 

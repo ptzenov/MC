@@ -1,13 +1,9 @@
 #ifndef _SP_SOLVER_HPP_
-
 #define _SP_SOLVER_HPP_
 
-#include <iostream>
-#include <math.h> // typical math stuff .. 
 #include <vector>
 
 // eigen lib stuff
-
 #include <Eigen/Core> // Matrix and Array classes. Basic lin algebra 
 #include <Eigen/LU> // inverse, determinant LU decomposition 
 #include <Eigen/Eigenvalues> // eigenval eigenvec decompositions! 

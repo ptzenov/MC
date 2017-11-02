@@ -32,13 +32,11 @@ void main_loop(RandomIt first, RandomIt last,
 	info.output(first, last);
 	// hmmm !!
         int num_events = 0;
-        double dt = T/(Nt-1);
         for(int t=0; t<Nt; t++)
         {
                 // for each particle p
-                for(auto idx=0; idx< particle_ids.size(); ++idx) 
+                for(size_t idx = 0; idx< particle_ids.size(); ++idx) 
                 {
-                
 			auto init_loc = particle_ids[idx];
 			auto fin_loc = draw_random_uniform_int<std::mt19937,int>(0,distance-1);
 
@@ -52,9 +50,6 @@ void main_loop(RandomIt first, RandomIt last,
 			if(scattered)
                         {
 				std::cout << "scattering event occured! " << std::endl;
-				auto tmp = initstate.get_pID(); 
-				initstate.set_pID(finstate.get_pID());
-				finstate.set_pID(tmp);
 				particle_ids[idx] = fin_loc; 	
 				num_events++;
 				info.output(first,last); 

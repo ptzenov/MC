@@ -124,6 +124,33 @@ std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N)
         return idx;
 }
 
+template<typename ForwardIt,typename ElementComparator >
+std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N, ElementComparator comp)
+{
+
+        std::vector<size_t> idx(N);
+        std::iota(idx.begin(),idx.end(),0);
+        struct IndexComparator
+        {
+        public:
+                IndexComparator(ForwardIt const & b, ElementComparator& c): 
+			begin (b), compare(c)
+                {;}
+                bool operator()(int i1, int i2)
+                {
+                        return compare(begin[i1],begin[i2]);
+                }
+        private:
+                ForwardIt const & begin;
+		ElementComparator compare; 
+        };
+
+        std::partial_sort(idx.begin(),idx.begin()+middle, idx.end(), IndexComparator (first,comp) );
+        return idx;
+}
+
+
+
 };
 #endif
 
