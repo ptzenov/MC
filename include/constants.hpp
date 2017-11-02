@@ -1,5 +1,6 @@
-#ifndef _CONSTANTS_
-#define _CONSTANTS_
+#ifndef _CONSTANTS_HPP_
+#define _CONSTANTS_HPP_
+
 namespace MC{
 
 	double 	eps0 = 8.8541878176e-12;

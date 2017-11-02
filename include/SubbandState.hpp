@@ -20,7 +20,6 @@ class SubbandState: public AbstractState{
 			       	vector<C_TYPE> Phi_z,
 			       	double k_x, double k_y,
 				double m_eff);
-		void print_state();
 		
 };
 

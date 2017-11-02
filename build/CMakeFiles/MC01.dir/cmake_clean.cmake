@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/MC01.dir/src/main.cpp.o"
+  "CMakeFiles/MC01.dir/src/parser.cpp.o"
   "CMakeFiles/MC01.dir/src/CheckersState.cpp.o"
   "CMakeFiles/MC01.dir/src/spsolver.cpp.o"
   "MC01.pdb"

@@ -72,9 +72,32 @@ CMakeFiles/MC01.dir/src/main.cpp.o.provides: CMakeFiles/MC01.dir/src/main.cpp.o.
 
 CMakeFiles/MC01.dir/src/main.cpp.o.provides.build: CMakeFiles/MC01.dir/src/main.cpp.o
 
+CMakeFiles/MC01.dir/src/parser.cpp.o: CMakeFiles/MC01.dir/flags.make
+CMakeFiles/MC01.dir/src/parser.cpp.o: ../src/parser.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/MC01.dir/src/parser.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/MC01.dir/src/parser.cpp.o -c /home/kenny/Documents/workspaces/githubrepos/MC/src/parser.cpp
+
+CMakeFiles/MC01.dir/src/parser.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MC01.dir/src/parser.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/kenny/Documents/workspaces/githubrepos/MC/src/parser.cpp > CMakeFiles/MC01.dir/src/parser.cpp.i
+
+CMakeFiles/MC01.dir/src/parser.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MC01.dir/src/parser.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/kenny/Documents/workspaces/githubrepos/MC/src/parser.cpp -o CMakeFiles/MC01.dir/src/parser.cpp.s
+
+CMakeFiles/MC01.dir/src/parser.cpp.o.requires:
+.PHONY : CMakeFiles/MC01.dir/src/parser.cpp.o.requires
+
+CMakeFiles/MC01.dir/src/parser.cpp.o.provides: CMakeFiles/MC01.dir/src/parser.cpp.o.requires
+	$(MAKE) -f CMakeFiles/MC01.dir/build.make CMakeFiles/MC01.dir/src/parser.cpp.o.provides.build
+.PHONY : CMakeFiles/MC01.dir/src/parser.cpp.o.provides
+
+CMakeFiles/MC01.dir/src/parser.cpp.o.provides.build: CMakeFiles/MC01.dir/src/parser.cpp.o
+
 CMakeFiles/MC01.dir/src/CheckersState.cpp.o: CMakeFiles/MC01.dir/flags.make
 CMakeFiles/MC01.dir/src/CheckersState.cpp.o: ../src/CheckersState.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/MC01.dir/src/CheckersState.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/MC01.dir/src/CheckersState.cpp.o -c /home/kenny/Documents/workspaces/githubrepos/MC/src/CheckersState.cpp
 
@@ -97,7 +120,7 @@ CMakeFiles/MC01.dir/src/CheckersState.cpp.o.provides.build: CMakeFiles/MC01.dir/
 
 CMakeFiles/MC01.dir/src/spsolver.cpp.o: CMakeFiles/MC01.dir/flags.make
 CMakeFiles/MC01.dir/src/spsolver.cpp.o: ../src/spsolver.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/MC01.dir/src/spsolver.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/MC01.dir/src/spsolver.cpp.o -c /home/kenny/Documents/workspaces/githubrepos/MC/src/spsolver.cpp
 
@@ -121,6 +144,7 @@ CMakeFiles/MC01.dir/src/spsolver.cpp.o.provides.build: CMakeFiles/MC01.dir/src/s
 # Object files for target MC01
 MC01_OBJECTS = \
 "CMakeFiles/MC01.dir/src/main.cpp.o" \
+"CMakeFiles/MC01.dir/src/parser.cpp.o" \
 "CMakeFiles/MC01.dir/src/CheckersState.cpp.o" \
 "CMakeFiles/MC01.dir/src/spsolver.cpp.o"
 
@@ -128,6 +152,7 @@ MC01_OBJECTS = \
 MC01_EXTERNAL_OBJECTS =
 
 MC01: CMakeFiles/MC01.dir/src/main.cpp.o
+MC01: CMakeFiles/MC01.dir/src/parser.cpp.o
 MC01: CMakeFiles/MC01.dir/src/CheckersState.cpp.o
 MC01: CMakeFiles/MC01.dir/src/spsolver.cpp.o
 MC01: CMakeFiles/MC01.dir/build.make
@@ -140,6 +165,7 @@ CMakeFiles/MC01.dir/build: MC01
 .PHONY : CMakeFiles/MC01.dir/build
 
 CMakeFiles/MC01.dir/requires: CMakeFiles/MC01.dir/src/main.cpp.o.requires
+CMakeFiles/MC01.dir/requires: CMakeFiles/MC01.dir/src/parser.cpp.o.requires
 CMakeFiles/MC01.dir/requires: CMakeFiles/MC01.dir/src/CheckersState.cpp.o.requires
 CMakeFiles/MC01.dir/requires: CMakeFiles/MC01.dir/src/spsolver.cpp.o.requires
 .PHONY : CMakeFiles/MC01.dir/requires

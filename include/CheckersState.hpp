@@ -1,7 +1,7 @@
 #include "State.hpp"
 
-#ifndef __CHECKERS__
-#define _CHECKERS_
+#ifndef _CHECKERS_HPP_
+#define _CHECKERS_HPP_
 
 #define DIAGONAL (false)
 

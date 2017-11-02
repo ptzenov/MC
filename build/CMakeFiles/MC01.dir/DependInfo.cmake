@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/kenny/Documents/workspaces/githubrepos/MC/src/CheckersState.cpp" "/home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles/MC01.dir/src/CheckersState.cpp.o"
   "/home/kenny/Documents/workspaces/githubrepos/MC/src/main.cpp" "/home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles/MC01.dir/src/main.cpp.o"
+  "/home/kenny/Documents/workspaces/githubrepos/MC/src/parser.cpp" "/home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles/MC01.dir/src/parser.cpp.o"
   "/home/kenny/Documents/workspaces/githubrepos/MC/src/spsolver.cpp" "/home/kenny/Documents/workspaces/githubrepos/MC/build/CMakeFiles/MC01.dir/src/spsolver.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

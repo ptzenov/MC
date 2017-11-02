@@ -1,65 +1,25 @@
 #include "spsolver.hpp"
+#include "constants.hpp"
+#include "utils.hpp"
 
-using namespace Eigen;
+using ArrayNd = Eigen::Array<double,Eigen::Dynamic,1>;
+using MatrixNd = Eigen::Matrix<double,Eigen::Dynamic,Eigen::Dynamic>; 
+using esolverType = Eigen::EigenSolver<MatrixNd>;
+
+using evalType = esolverType::EigenvalueType;
+using evecType = esolverType::EigenvectorsType;
 
 
-typedef Eigen::Array<double,Dynamic,1> ArrayNd; 
-typedef Eigen::Matrix<double,Dynamic,Dynamic> MatrixNd; 
 
-typedef Eigen::EigenSolver<MatrixNd> esolverType;
-typedef esolverType::EigenvalueType evalType;
-typedef esolverType::EigenvectorsType evecType;
-
-double normalize_WF(ArrayNd z,ArrayNd Psi){
-	assert(z.size() == Psi.size());
-	assert(z.size()>3);
-	double integral = 0; 
-	for(int i=1;i<z.size()-1;i++)
-		integral+= .5*(Psi(i-1)*Psi(i-1)+Psi(i)*Psi(i))*(z(i)-z(i-1));	
-	return integral;
-}
-
-std::vector<int> search_WFs_by_min_real(int nrWF, evalType array){
+std::vector<int> search_WFs_by_min_real(size_t nrWF, evalType array){
 	
-	assert(array.size()>=1);	
-	std::vector<int> idx;
+	std::vector<int> res(nrWF); 
+	return res; 	
 
-	double min = array(0).real();
-	int min_idx = 0; 	
-	for(int i=1;i<array.size();i++){
-		double a = array(i).real(); 
-		if (a<min){
-			min = a; 
-			min_idx = i; 
-		}
-	}
-	idx.push_back(min_idx);
-	for(int n=1;n<nrWF;n++){
-		min = 1e20;
-
-		for(int i=1;i<array.size();i++){
-			double a = array(i).real(); 
-			if (a<min && std::find(idx.begin(),idx.end(),i) == idx.end()){
-				min = a; 
-				min_idx = i; 
-			}
-		}	
-		idx.push_back(min_idx);		
-	}
-
-	return idx; 
 }
 
 void MC::sp_solve(std::vector<Layer>& layers,double Temp,double bias_kV_cm,int nrWF){
 
-
-	/*	typedef Eigen::Array<double,Dynamic,1> ArrayNd; 
-		typedef Eigen::Matrix<double,Dynamic,Dynamic> MatrixNd; 
-		typedef Eigen::EigenSolver<MatrixNd> esolverType;
-		typedef esolverType::EigenvalueType evalType;
-		typedef esolverType::EigenvectorsType evecType;
-	
-	*/
 	double Lp = 0.; 
 
 	std::vector<double> _z;
@@ -85,8 +45,10 @@ void MC::sp_solve(std::vector<Layer>& layers,double Temp,double bias_kV_cm,int n
 
 	int N = _z.size();
 
-	MatrixNd H0; 
+	MatrixNd H0;
+
 	H0 = MatrixNd::Zero(N,N);// for S.E. 
+
 	MatrixNd M;
 	M =  MatrixNd::Zero(N,N); // for Poisson eqn. 
 
@@ -128,16 +90,8 @@ void MC::sp_solve(std::vector<Layer>& layers,double Temp,double bias_kV_cm,int n
 		evecType evecs = es.eigenvectors();
 	
 		std::vector<int> idx = search_WFs_by_min_real(nrWF,evals);
-		for(int i=0;i<idx.size();i++){
-			Psi_z.col(i) = evecs.col(idx[i]).real();
-
-			Psi_z.col(i) /= normalize_WF(z,Psi_z.col(i)); 
-		}
-
-
 		// sort the eigenvalues 
 		// get the first nrWF indices
-
 		break;			
 	}
 }

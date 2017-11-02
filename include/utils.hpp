@@ -40,12 +40,9 @@ void draw_without_replacement(RandomIt first, RandomIt last,
         assert(num_elems <= seq_size);
 
         std::vector<int> indices(seq_size);
+        srand(time(NULL));
 
-
-
-	srand(time(NULL));
-
-	std::iota(indices.begin(),indices.end(), 0);
+        std::iota(indices.begin(),indices.end(), 0);
         std::random_shuffle(indices.begin(),indices.end());
 
         for(int i = 0; i < num_elems; i++ )
@@ -63,16 +60,16 @@ template<typename RandGen, typename FloatType>
 FloatType draw_random_uniform_double(RandGen gen, FloatType a, FloatType b)
 {
 
-	std::uniform_real_distribution<FloatType> dist(a,b);
+        std::uniform_real_distribution<FloatType> dist(a,b);
         return dist(gen);
 }
 
 template<typename RandGen, typename FloatType>
 FloatType draw_random_uniform_double(FloatType a, FloatType b)
 {
-       	std::uniform_real_distribution<FloatType> dist(a,b);
+        std::uniform_real_distribution<FloatType> dist(a,b);
         RandGen gen = get_pseudorandom_generator<RandGen>();
-	return dist(gen);
+        return dist(gen);
 }
 
 template<typename RandGen, typename IntType>
@@ -90,9 +87,46 @@ IntType draw_random_uniform_int(IntType a, IntType b)
         return dist(gen);
 }
 
+template<typename ForwardIt, typename T>
+T trapz(ForwardIt z0, ForwardIt zN, ForwardIt f0, ForwardIt fN)
+{
+        auto Nz = std::distance(z0,zN);
+        auto Nf = std::distance(f0,fN);
+        assert(Nz  == Nf);
+        assert(Nz > 3);
+        T integral {0.};
+        for(auto i = 1; i < Nz; ++i)
+                integral+= (f0[i+1]+f0[i-1])*(z0[i]-z0[i-1])/2.0;
+        return integral;
+}
+
+
+
+template<typename ForwardIt>
+std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N)
+{
+
+        std::vector<size_t> idx(N);
+        std::iota(idx.begin(),idx.end(),0);
+        struct IndexComparator
+        {
+        public:
+                IndexComparator(ForwardIt const & b) : begin {b}
+                {;}
+                bool operator()(int i1, int i2) const
+                {
+                        return begin[i1] < begin[i2];
+                }
+        private:
+                ForwardIt const & begin;
+        };
+        std::partial_sort(idx.begin(),idx.begin()+middle, idx.end(), IndexComparator {first} );
+        return idx;
+}
 
 };
 #endif
+
 
 
 
