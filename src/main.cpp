@@ -32,7 +32,7 @@ using ArrayNd = Eigen::Array<double,1,Eigen::Dynamic>;
        	scatterers.push_back(&MC::scatter_checkers);
 	std::cout << "scatterrs size is " << scatterers.size() << std::endl;
 	MC::main_loop(states.begin(),states.end(),scatterers,info,
-			num_particles, Nt,T);
+			num_particles, Nt);
         std::cout<<"Bubye"<<"\n";
 
 }

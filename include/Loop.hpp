@@ -12,7 +12,7 @@ namespace MC
 template<class RandomIt, typename Scatterer, typename Info>
 void main_loop(RandomIt first, RandomIt last,
 	       std::vector<Scatterer> scatterers,
-               Info info, int num_particles, int Nt, double T)
+               Info info, int num_particles, int Nt)
 {
 	auto distance = std::distance(first, last); 
         assert(num_particles < distance);
