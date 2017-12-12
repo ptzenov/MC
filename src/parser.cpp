@@ -1,11 +1,8 @@
-/*
- * SimFileParser.cpp
+/** 
+ * file: parser.cpp
+ * Input file parser and utility funcitons
  *
- *  Created on: Apr 8, 2016
- *      Author: petzko
- */
-
-
+ **/
 #include "parser.hpp"
 
 #include <fstream>
@@ -74,7 +71,6 @@ std::vector<std::string>  getOptionFromFile(char* filename, std::string option){
 			//remove trailing and leding spaces.
 			
 			line = normalizeStr(line);
-			
 			// now parse line looking for your option ...
 			//tokenize the string removing empty spaces
 			std::vector<std::string> tokens = tokenize(line,DELIMITER);
@@ -91,9 +87,7 @@ std::vector<std::string>  getOptionFromFile(char* filename, std::string option){
 				}
 		}
 		file.close();
-
 	}
-	
 	return result;
 }
 

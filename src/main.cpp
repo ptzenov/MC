@@ -7,11 +7,6 @@
 
 int main(int argc, char** argv)
 {
-
-
-using ArrayNd = Eigen::Array<double,1,Eigen::Dynamic>;
-
-
 	int num_particles = 8;
 
 	int Nt = 100000;

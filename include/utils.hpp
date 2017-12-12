@@ -1,3 +1,10 @@
+/** 
+ * file: utils.hpp
+ *
+ * Defines the main utility functions for the project 
+ *
+ */ 
+
 #ifndef _UTILS_HPP_
 #define _UTILS_HPP_
 
@@ -16,10 +23,12 @@
 
 #include <algorithm>
 
-// complex<double> or complex<float>
+// change the precision at will.
 #define C_TYPE std::complex<double>
+#define R_TYPE double
+
 //imaginary unit
-#define I C_TYPE(0,1)
+#define I C_TYPE(0.,1.)
 
 // real imag abs and coj
 #define C_REAL(x) std::real(x)
@@ -31,6 +40,9 @@
 
 namespace MC
 {
+//
+// names are self-explanatory
+//
 
 template<typename RandomIt, typename OutputIt>
 void draw_without_replacement(RandomIt first, RandomIt last,
@@ -59,7 +71,6 @@ RandGen get_pseudorandom_generator()
 template<typename RandGen, typename FloatType>
 FloatType draw_random_uniform_double(RandGen gen, FloatType a, FloatType b)
 {
-
         std::uniform_real_distribution<FloatType> dist(a,b);
         return dist(gen);
 }
@@ -101,11 +112,10 @@ T trapz(ForwardIt z0, ForwardIt zN, ForwardIt f0, ForwardIt fN)
 }
 
 
-
+// get the index of the partial sorted elements in ForwardIt 
 template<typename ForwardIt>
 std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N)
 {
-
         std::vector<size_t> idx(N);
         std::iota(idx.begin(),idx.end(),0);
         struct IndexComparator
@@ -148,7 +158,6 @@ std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N, E
         std::partial_sort(idx.begin(),idx.begin()+middle, idx.end(), IndexComparator (first,comp) );
         return idx;
 }
-
 
 
 };

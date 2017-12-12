@@ -1,3 +1,10 @@
+/**
+ * file: CheckersState.cpp 
+ * 
+ * This is the main implementation of the checkersstate class together with the 
+ * "rules" for scattering between states i and j . 
+ *
+ */
 #include <random>
 #include <iostream>
 
@@ -12,7 +19,6 @@ void MC::CheckersState::print_state()
 
 bool MC::scatter_checkers(MC::CheckersState& init, MC::CheckersState& fin, MC::CheckersInfo&  info)
 {
-
         int Nx = info.get_Nx();
         int Ny = info.get_Ny();
         

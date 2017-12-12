@@ -1,3 +1,8 @@
+/**
+ * file: constants.hpp
+ * Fundamental physical constants (in SI units) useful for our simulations
+ *
+ */
 #ifndef _CONSTANTS_HPP_
 #define _CONSTANTS_HPP_
 

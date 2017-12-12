@@ -1,3 +1,10 @@
+/** 
+ * file: spsolver.hpp
+ *
+ * Main header declaring the Schrodinger Poisson solver-related helper classes
+ *  and  routines. Must be refactored.   
+ *
+ */ 
 #ifndef _SP_SOLVER_HPP_
 #define _SP_SOLVER_HPP_
 

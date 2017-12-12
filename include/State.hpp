@@ -1,3 +1,9 @@
+/**
+ * file: State.hpp 
+ * the main state class defining the concept of state together with some 
+ * additional funcitonality.  
+ *
+ */ 
 #ifndef _STATE_HPP_
 #define _STATE_HPP_
 
@@ -11,7 +17,7 @@
 
 namespace MC
 {
-class MetaInfo { };
+class MetaInfo { }; // metaInfo about the state
 
 class AbstractState
 {

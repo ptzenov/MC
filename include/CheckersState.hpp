@@ -1,16 +1,25 @@
+/**
+ * file: CheckersState.hpp 
+ *
+ */ 
+
 #include "State.hpp"
 
 #ifndef _CHECKERS_HPP_
 #define _CHECKERS_HPP_
 
-#define DIAGONAL (false)
+#define DIAGONAL (false) // should we enable diagonal scattering?
 
 
 namespace MC
 {
 
-class CheckersInfo;
+class CheckersInfo; // forward declare; 
 
+/*
+ * A class encapsulating the concept of a state on a checker box. 
+ * Publicly inherits from AbstractState
+ */
 class CheckersState: public AbstractState
 {
 public:
@@ -84,15 +93,20 @@ public:
         {
                 return _T;
         }
+
+	/** 
+	 * a template funciton for printing the checkerboard. 
+	 *
+	 * The template argument is an object conforming to the RandomIt concept. 
+	 */ 
         template< typename RandomIt>
-        void output(RandomIt first, RandomIt last)
+        void output(RandomIt first, RandomIt last) 
         {
 
                 // max num digits is
                 int num_digits = int(ceil(log10((double)_Nx*_Ny)));
                 auto distance = std::distance(first,last);
                 assert(distance == _Nx*_Ny);
-
                 std::cout << std::endl;
 
                 for(int n = 0; n<_Ny; n++)
@@ -135,7 +149,9 @@ public:
 
         }
 };
-
+/**
+ * delcare scatterer fucntion
+ **/
 bool scatter_checkers(CheckersState&,CheckersState&,CheckersInfo&);
 
 };

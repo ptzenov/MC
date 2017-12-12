@@ -1,3 +1,10 @@
+/**
+ *
+ * file: spsolver.cpp
+ * This is where the sp-solver functionality should come in
+ *
+ **/
+
 #include "spsolver.hpp"
 #include "constants.hpp"
 #include "utils.hpp"
@@ -32,10 +39,15 @@ void MC::setup_structure(std::vector<MC::Layer> const & layers, MC::StructureInf
 	structure.N = structure.z.size(); 
 }
 
-
-void MC::sp_solve(std::vector<Layer>& layers,double Temp,double bias_kV_cm,int nrWF){
-	
-	
+/***
+ * Solves the Schrodinger-Poisson equation onto the heterostructure defined y 
+ * layers and should retrieve the nrWF most "important" wave fucntions.
+ *
+ * TODO: implement algo. 
+ * TODO: think on how to return the data (pass by ref)? 
+ */ 
+void MC::sp_solve(std::vector<Layer>& layers,double Temp,double bias_kV_cm,int nrWF)
+{
 
 	StructureInfo si{}; 
 	setup_structure(layers,si,bias_kV_cm);

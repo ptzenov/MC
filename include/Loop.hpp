@@ -1,3 +1,8 @@
+/** 
+ * file: Loop.hpp 
+ * contains the templetized version of the main loop 
+ *
+ */ 
 #ifndef _LOOP_HPP_
 #define _LOOP_HPP_
 
@@ -8,7 +13,11 @@
 #include <assert.h>
 namespace MC
 {
-
+/**
+ * this is the main iteration loop 
+ * template arguments are (Random Iterator, a Scatterer type (function that scaters states) 
+ * and an info struct carrying any additional information) 
+ */
 template<class RandomIt, typename Scatterer, typename Info>
 void main_loop(RandomIt first, RandomIt last,
 	       std::vector<Scatterer> scatterers,
@@ -56,7 +65,6 @@ void main_loop(RandomIt first, RandomIt last,
 			}
                 }
         }
-	
 }
 
 
