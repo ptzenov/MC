@@ -11,12 +11,13 @@
 int main(int argc, char** argv)
 {
 	
-	size_t Nt = 100000;
-	size_t num_particles = 1;
-
 
 
 	/*	
+
+	size_t Nt = 10000;
+	size_t num_particles = 1;
+
 	int Nx = 10;
         int Ny = 10;
         
@@ -31,6 +32,9 @@ int main(int argc, char** argv)
        	scatterers.push_back(scatterer);
 	*/
 
+
+	size_t Nt = 10000000; 
+	size_t num_particles = 1; 
 	size_t dim = 2;
 	
 	std::vector<MC::RandomWalkState> states;

@@ -5,6 +5,7 @@
 
 #include <memory>
 #include <assert.h>
+#include <cmath>
 
 namespace MC
 {
@@ -19,7 +20,14 @@ private:
 public:
 
         RandomWalkState(size_t dim);
-        ~RandomWalkState();
+
+	RandomWalkState(const RandomWalkState& other); 
+	RandomWalkState& operator=(const RandomWalkState& other); 
+
+	RandomWalkState(RandomWalkState&& other) = default; 
+	RandomWalkState& operator=(RandomWalkState&& other) = default; 
+	~RandomWalkState();
+
         inline double get_coord(size_t i) const
         {
                 assert( i < _dim);
@@ -46,9 +54,12 @@ class BrownianRecord
 private:
         size_t _dim;
         size_t	_Nt;
-
-        std::unique_ptr<double[]> _data ;
-        size_t _t;
+	        
+	std::unique_ptr<double[]> _data ;
+	std::unique_ptr<double []> _sum;
+        
+	size_t _t;
+	size_t _ctr; 
 public:
         BrownianRecord(size_t dim, size_t N_t);
         void post_process(RandomWalkState&, RandomWalkState&,bool);
