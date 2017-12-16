@@ -11,17 +11,8 @@
 #include "utils.hpp"
 #include "CheckersState.hpp"
 
-/** CHECKERS STATE **/
-void MC::CheckersState::print_state()
+bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersState& fin)
 {
-        std::cout<< "x: "<< get_x() << "; y: "<<get_y() << "\n";
-}
-
-bool MC::scatter_checkers(MC::CheckersState& init, MC::CheckersState& fin, MC::CheckersInfo&  info)
-{
-        int Nx = info.get_Nx();
-        int Ny = info.get_Ny();
-        
 	// do not change anything !
         if ( &init == &fin)
                 return false;

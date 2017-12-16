@@ -16,8 +16,8 @@ class SubbandState: public AbstractState{
 
 	private: 
 		// C_TYPE  -> complex, R_TYPE -> real
-		std::unique_ptr<C_TYPE> Phi_z; // wave-funciton 
-		std::unique_ptr<R_TYPE> z; // z-grid
+		std::unique_ptr<C_TYPE []> Phi_z; // wave-funciton 
+		std::unique_ptr<R_TYPE []> z; // z-grid
 	        double k_x; // wave vector in the transverse direction 
 		double k_y;
 		double E_z; 
@@ -27,7 +27,6 @@ class SubbandState: public AbstractState{
 			       	std::vector<C_TYPE> Phi_z,
 			       	double k_x, double k_y,
 				double m_eff); // constructor
-		
 };
 
 };

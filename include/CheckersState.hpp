@@ -1,23 +1,22 @@
 /**
- * file: CheckersState.hpp 
+ * file: CheckersState.hpp
  *
- */ 
-
-#include "State.hpp"
-
+ */
 #ifndef _CHECKERS_HPP_
 #define _CHECKERS_HPP_
 
-#define DIAGONAL (false) // should we enable diagonal scattering?
+#include <iostream>
+#include "State.hpp"
 
+
+
+#define DIAGONAL (false) // should we enable diagonal scattering?
 
 namespace MC
 {
 
-class CheckersInfo; // forward declare; 
-
 /*
- * A class encapsulating the concept of a state on a checker box. 
+ * A class encapsulating the concept of a state on a checker box.
  * Publicly inherits from AbstractState
  */
 class CheckersState: public AbstractState
@@ -43,15 +42,14 @@ public:
         {
         }
 
-        int get_x() const
+        inline        int get_x() const
         {
                 return _coords[0];
         }
-        int get_y() const
+        inline int get_y() const
         {
                 return _coords[1];
         }
-        void print_state();
 private:
         /* These are the state variables;
          * x,y: current (x,y) coordinates;
@@ -59,53 +57,26 @@ private:
         int _coords[2];
 };
 
-class CheckersInfo
+/*
+ * A templated class responsible for post-processing the scattering events!
+ * ! must implement the post_process(AbstractState&, AbstractState&, bool) method
+ */
+template< typename RandomIt>
+class RecordCheckers
 {
 private:
         int _Nx; // num elements in x
         int _Ny; // num elements in y
-        int _num_particles;  // obvious
-        int _Nt;  // number of iterations
-        double _T; // simulation time
-public:
-        CheckersInfo(int nx,int ny,int np, int nt, double t): _Nx(nx),_Ny(ny),
-                _num_particles(np),_Nt(nt),_T(t)
-        {
-                ;
-        }
-        int get_Nx() const
-        {
-                return _Nx;
-        }
-        int get_Ny() const
-        {
-                return _Ny;
-        }
-        int get_num_particles() const
-        {
-                return _num_particles;
-        }
-        int get_Nt() const
-        {
-                return _Nt;
-        }
-        double get_T() const
-        {
-                return _T;
-        }
 
-	/** 
-	 * a template funciton for printing the checkerboard. 
-	 *
-	 * The template argument is an object conforming to the RandomIt concept. 
-	 */ 
-        template< typename RandomIt>
-        void output(RandomIt first, RandomIt last) 
+        RandomIt _first;// first element of the states
+        RandomIt _last;// last element of the states
+
+        void output()
         {
 
                 // max num digits is
                 int num_digits = int(ceil(log10((double)_Nx*_Ny)));
-                auto distance = std::distance(first,last);
+                auto distance = std::distance(_first,_last);
                 assert(distance == _Nx*_Ny);
                 std::cout << std::endl;
 
@@ -124,7 +95,7 @@ public:
                         for (int y=0; y < _Ny; y++)
                         {
                                 std::cout<<"|_";
-                                int particle_id = first[y+x*_Ny].get_pID();
+                                int particle_id = _first[y+x*_Ny].get_pID();
                                 int start_from = 0;
                                 if (particle_id != EMPTY)
                                 {
@@ -146,26 +117,47 @@ public:
                         }
                         std::cout<<std::endl;
                 }
-
         }
+public:
+        RecordCheckers(int nx,int ny, RandomIt first, RandomIt last): _Nx(nx),_Ny(ny), _first {first}, _last {last}
+        {
+                ;
+        }
+
+
+	RecordCheckers(const RecordCheckers& other) = delete; 
+	RecordCheckers& operator=(const RecordCheckers& other) = delete; 
+	RecordCheckers(RecordCheckers&& other) = delete; 
+	RecordCheckers& operator=(RecordCheckers&& other) = delete; 
+
+	inline  int get_Nx() const
+        {
+                return _Nx;
+        }
+        inline int get_Ny() const
+        {
+                return _Ny;
+        }
+	void post_process(CheckersState& init, CheckersState& fin, bool scattered)
+	{
+		if(scattered)
+			output();
+	}
 };
 /**
- * delcare scatterer fucntion
+ * scatterer functor
  **/
-bool scatter_checkers(CheckersState&,CheckersState&,CheckersInfo&);
-
+class CheckersScatterer
+{
+private:
+        int Nx;
+        int Ny;
+public:
+	CheckersScatterer(int in_Nx, int in_Ny): Nx{in_Nx}, Ny{in_Ny}{;} 
+        bool operator()(CheckersState&, CheckersState&);
 };
 
 
+}
 #endif
-
-
-
-
-
-
-
-
-
-
 

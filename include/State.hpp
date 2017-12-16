@@ -7,17 +7,13 @@
 #ifndef _STATE_HPP_
 #define _STATE_HPP_
 
-#include <stdlib.h>
-#include <time.h>
-#include <vector>
-#include <iostream>
-
+#include <algorithm>
 
 #define EMPTY -1
 
+
 namespace MC
 {
-class MetaInfo { }; // metaInfo about the state
 
 class AbstractState
 {
