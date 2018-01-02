@@ -138,7 +138,7 @@ public:
         {
                 return _Ny;
         }
-	void post_process(CheckersState& init, CheckersState& fin, bool scattered)
+	void post_process(CheckersState& init, CheckersState& fin, bool scattered, size_t t)
 	{
 		if(scattered)
 			output();
@@ -154,7 +154,7 @@ private:
         int Ny;
 public:
 	CheckersScatterer(int in_Nx, int in_Ny): Nx{in_Nx}, Ny{in_Ny}{;} 
-        bool operator()(CheckersState&, CheckersState&);
+        bool operator()(CheckersState&, CheckersState&, size_t t);
 };
 
 

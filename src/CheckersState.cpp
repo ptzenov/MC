@@ -11,7 +11,7 @@
 #include "utils.hpp"
 #include "CheckersState.hpp"
 
-bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersState& fin)
+bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersState& fin, size_t t)
 {
 	// do not change anything !
         if ( &init == &fin)

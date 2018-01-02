@@ -56,11 +56,11 @@ void main_loop(RandomIt first, RandomIt last,
 			auto& finstate = first[fin_loc];
 			
 			Scatterer scatter_func = scatterers[draw_random_uniform_int<std::mt19937,int>(0,scatterers.size()-1)];
-			bool scattered = scatter_func(initstate,finstate);
+			bool scattered = scatter_func(initstate,finstate,t);
 			if(scattered)
 				particle_locs[idx] = fin_loc; 	
 			
-			recorder.post_process(initstate,finstate,scattered);	
+			recorder.post_process(initstate,finstate,scattered,t);	
                 }
         }
 }

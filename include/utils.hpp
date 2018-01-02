@@ -169,6 +169,7 @@ T trapz(ForwardIt z0, ForwardIt zN, ForwardIt f0, ForwardIt fN)
         return integral;
 }
 };
+
 #endif
 
 

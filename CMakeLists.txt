@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8) 
+cmake_minimum_required(VERSION 3.0) 
 project(MC)
  
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++11")
@@ -6,7 +6,11 @@ set(CMAKE_CXX "g++")
 
 #Bring the headers, such as Student.h into the project
 include_directories(
-	include
+	"include"
+	)
+	
+link_directories(
+	"lib"
 	)
 
 #Can manually add the sources using the set command as follows:
@@ -17,4 +21,5 @@ file(GLOB SOURCES "src/*.cpp")
  
 add_executable(MC01 ${SOURCES})
 
+target_link_libraries(MC01)
 

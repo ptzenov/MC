@@ -56,17 +56,16 @@ private:
         size_t	_Nt;
 	        
 	std::unique_ptr<double[]> _data ;
-	std::unique_ptr<double []> _sum;
+	std::unique_ptr<double[]> _sum;
         
-	size_t _t;
 	size_t _ctr; 
 public:
         BrownianRecord(size_t dim, size_t N_t);
-        void post_process(RandomWalkState&, RandomWalkState&,bool);
-
+        void post_process(RandomWalkState&, RandomWalkState&,bool,size_t);
+	inline double const * get_data() {return _data.get();}
 };
 
-bool random_step(RandomWalkState&,RandomWalkState&);
+bool random_step(RandomWalkState&,RandomWalkState&, size_t);
 
 }
 
