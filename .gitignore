@@ -3,6 +3,5 @@
 .*.swo
 
 1
-test*
 scratchboard/*
 build/*
