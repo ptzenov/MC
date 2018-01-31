@@ -3,7 +3,7 @@
  * Input file parser and utility funcitons
  *
  **/
-#include "parser.hpp"
+#include "utils/parser.hpp"
 
 #include <fstream>
 #include <sstream>

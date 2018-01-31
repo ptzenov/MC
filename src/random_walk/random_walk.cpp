@@ -1,5 +1,5 @@
-#include "RandomWalkState.hpp"
-#include "utils.hpp"
+#include "random_walk/random_walk.hpp"
+#include "utils/common.hpp"
 
 #include <iostream>
 

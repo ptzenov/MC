@@ -5,8 +5,8 @@
  *
  */
 
-#ifndef _UTILS_HPP_
-#define _UTILS_HPP_
+#ifndef _COMMON_HPP_
+#define _COMMON_HPP_
 
 
 #include <random>
@@ -36,11 +36,8 @@
 
 namespace MC
 {
-//
-// names are self-explanatory
-//
 
-/*** Sampling functions ***/
+	/*******  Sampling functions *******/
 
 /**
  * Draw from Randomit and store in OutputIt

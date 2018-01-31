@@ -1,3 +1,8 @@
+/**
+ * file: plot/GNUplotter.hpp
+ * Some plotting routines
+ */
+
 #ifndef _GNUPLOTTER_HPP_
 #define _GNUPLOTTER_HPP_
 

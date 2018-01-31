@@ -1,7 +1,13 @@
-#ifndef _RANDOM_WALK_STATE_
-#define _RANDOM_WALK_STATE_
+/**
+ * file: subband/random_walk.hpp
+ * Incorporates the main classes and utility functions 
+ * for implementation of a random walk
+ */
 
-#include "State.hpp"
+#ifndef _RANDOM_WALK_HPP_
+#define _RANDOM_WALK_HPP__
+
+#include "state.hpp"
 
 #include <memory>
 #include <assert.h>

@@ -1,13 +1,7 @@
-/**
- *
- * file: spsolver.cpp
- * This is where the sp-solver functionality should come in
- *
- **/
+#include "subband/subband.hpp"
+#include "utils/constants.hpp"
+#include "utils/common.hpp"
 
-#include "spsolver.hpp"
-#include "constants.hpp"
-#include "utils.hpp"
 #include <complex>
 
 using ArrayNd = Eigen::Array<double,Eigen::Dynamic,1>;

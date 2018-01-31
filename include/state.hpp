@@ -1,5 +1,5 @@
 /**
- * file: State.hpp 
+ * file: state.hpp 
  * the main state class defining the concept of state together with some 
  * additional funcitonality.  
  *

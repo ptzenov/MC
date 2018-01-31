@@ -1,14 +1,12 @@
 /**
- * file: CheckersState.hpp
- *
+ * file: checkers.hpp
+ * Main classes and util functions for the checkers scattering state
  */
 #ifndef _CHECKERS_HPP_
 #define _CHECKERS_HPP_
 
 #include <iostream>
-#include "State.hpp"
-
-
+#include "state.hpp"
 
 #define DIAGONAL (false) // should we enable diagonal scattering?
 

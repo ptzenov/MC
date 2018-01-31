@@ -1,12 +1,12 @@
 /** 
- * file: Loop.hpp 
+ * file: loop.hpp 
  * contains the templetized version of the main loop 
  *
  */ 
 #ifndef _LOOP_HPP_
 #define _LOOP_HPP_
 
-#include "utils.hpp"
+#include "utils/common.hpp"
 
 #include <algorithm>
 #include <vector>

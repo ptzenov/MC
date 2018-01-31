@@ -1,15 +1,8 @@
-/**
- * file: CheckersState.cpp 
- * 
- * This is the main implementation of the checkersstate class together with the 
- * "rules" for scattering between states i and j . 
- *
- */
 #include <random>
 #include <iostream>
 
-#include "utils.hpp"
-#include "CheckersState.hpp"
+#include "utils/common.hpp"
+#include "checkers/checkers.hpp"
 
 bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersState& fin, size_t t)
 {

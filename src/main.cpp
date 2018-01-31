@@ -1,12 +1,11 @@
 #include <iostream>
 #include <vector>
 
-#include "spsolver.hpp"
-#include "Loop.hpp"
-#include "CheckersState.hpp"
-#include "RandomWalkState.hpp"
-
-#include "GNUplotter.hpp"
+#include "subband/subband.hpp"
+#include "loop.hpp"
+#include "checkers/checkers.hpp"
+#include "random_walk/random_walk.hpp"
+#include "plot/GNUplotter.hpp"
 
 void monte_carlo_checkers()
 {
