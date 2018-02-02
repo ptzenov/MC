@@ -1,5 +1,5 @@
 /**
- * file: utils.hpp
+ * file: utils/common.hpp
  *
  * Defines the main utility functions for the project
  *
@@ -37,7 +37,7 @@
 namespace MC
 {
 
-	/*******  Sampling functions *******/
+/*******  Sampling functions *******/
 
 /**
  * Draw from Randomit and store in OutputIt
@@ -152,6 +152,9 @@ IntType draw_random_uniform_int(IntType a, IntType b)
         return dist(gen);
 }
 
+
+
+
 /*** Numeric functions ***/
 template<typename ForwardIt, typename T>
 T trapz(ForwardIt z0, ForwardIt zN, ForwardIt f0, ForwardIt fN)
@@ -162,11 +165,12 @@ T trapz(ForwardIt z0, ForwardIt zN, ForwardIt f0, ForwardIt fN)
         assert(Nz > 3);
         T integral {0.};
         for(auto i = 1; i < Nz; ++i)
-                integral+= (f0[i+1]+f0[i-1])*(z0[i]-z0[i-1])/2.0;
+                integral+= (f0[i]+f0[i-1])*(z0[i]-z0[i-1])/2.0;
         return integral;
 }
 };
 
 #endif
+
 
 

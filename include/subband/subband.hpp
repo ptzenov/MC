@@ -1,13 +1,16 @@
 /**
  * file: subband/subband.hpp
- * Incorporates the main classes and util functions for storing and calculating subband 
+ * Incorporates the main classes and util functions for storing and calculating subband
  * states
  */
 #ifndef _SUBBAND_HPP_
 #define _SUBBAND_HPP_
 
-#include "state.hpp"
-#include "utils/common.hpp"
+// internal headers
+#include <state.hpp>
+#include <utils/common.hpp>
+#include <utils/constants.hpp>
+#include <plot/GNUplotter.hpp>
 
 #include <memory>
 
@@ -19,21 +22,23 @@
 #include <Eigen/Eigenvalues> // eigenval eigenvec decompositions! 
 
 
+using MatrixNd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>;
+using VectorNd = Eigen::Matrix<double, Eigen::Dynamic, 1>;
 
 namespace MC
 {
 
 class SubbandState: public AbstractState
 {
-
 private:
         // C_TYPE  -> complex, R_TYPE -> real
         std::unique_ptr<C_TYPE []> Phi_z; // wave-funciton
         std::unique_ptr<R_TYPE []> z; // z-grid
-        double k_x; // wave vector in the transverse direction
+        // wave vector in the transverse direction
+        double k_x;
         double k_y;
-        double E_z;
-        double m_eff;
+        double E; // eigen-energy
+        double m_eff; // effective mass - weighted average!
 public:
         SubbandState(std::vector<double> z, double E_z,
                      std::vector<C_TYPE> Phi_z,
@@ -42,45 +47,50 @@ public:
 };
 
 
-struct Material
+/************** Schroedinger-Poisson solver *******************/ 
+
+class Material
 {
-        double	E_g_eV;
-        double	m_eff_kg;
-        Material(double E_g,double m_eff);
+public:
+        double	E_g;	// band gap in J = kg*m*m/s/s
+        double  VBO;	// valence band offset in J = kg*m*m/s/s  //w.r.t. GaN
+        double	m_eff;	// effective mass in kg
+        double  eps;	// absolute permittivity in A*s/V/m
 };
+
 struct Layer
 {
+        Layer(Material mat, double thick, double dope)
+                : material(mat), thickness(thick), doping(dope) {};
         Material material;
-        double thickness_A;
-        double doping_cm3;
+        double thickness;							// thickness in m
+        double doping;								// doping in m^3
 };
 
-struct StructureInfo
-{
-        double Lp;
-        double bias_V_m;
-        double dz;
-        size_t N;
-        std::vector<double> V0; // conduction band profile
-        std::vector<double> z; // grid
-        std::vector<double> meff; // effective mass
-        std::vector<double> nD; // nD(z) donor doping density in m^3;
-        std::vector<double> nA; // nA(z) acceptor doping density in m^3;
+void sp_solve(std::vector<MC::Layer> const & layers, double const Temp_K,
+              double const bias_V_m, int const nrWF, const double n2D,
+              double dE = 1.0e-10 * e0, double dz = 1.0e-10);
 
-        StructureInfo(): Lp {0}, bias_V_m {0}, dz {0}, N {0},
-                      V0(0), z(0), meff(0), nD(0), nA(0)
-        {
-                ;
-        }
-};
+/** 
+ * Utility functions  
+ */
+void material_properties(MC::Material &mat, double const E_g_Joule,
+                         double const VBO_Joule, double const meff_kg, const double abs_permittivity);
 
-void sp_solve(std::vector<Layer>& layers,double Temp, double bias,int nrWF);
+void fermi_dirac(VectorNd &ni, VectorNd const &E_vals, VectorNd const &_meff,
+	       	VectorNd const &idxWF, const double Temp, const int nrWF, const double dE, const double n2D);
 
-void setup_structure(std::vector<Layer> const &, MC::StructureInfo&, double);
+void plot_WF(GNUPlotter &plotter, VectorNd const &_z, VectorNd const &V_z,
+             const int nrWF, MatrixNd const &Psi_z_out);
+
+
+
 
 };
 
 
 
 #endif
+
+
 
