@@ -105,7 +105,7 @@ void sp_solve_calculate_and_plot()
                 MC::Layer(Al_15_GaAs_85, 30 * spacing, 0),
                 MC::Layer(GaAs, 90 * spacing, 0),
                 MC::Layer(Al_15_GaAs_85, 55 * spacing, 0),
-                MC::Layer(GaAs, 79 * spacing, 0),
+		MC::Layer(GaAs, 79 * spacing, 0),
                 MC::Layer(Al_15_GaAs_85, 25 * spacing, 0),
                 MC::Layer(GaAs, 65 * spacing, 0),
                 MC::Layer(Al_15_GaAs_85, 41 * spacing, 0),
@@ -113,7 +113,7 @@ void sp_solve_calculate_and_plot()
                 MC::Layer(Al_15_GaAs_85, 30 * spacing, 0),
                 MC::Layer(GaAs, 90 * spacing, 0),
                 MC::Layer(Al_15_GaAs_85, 55 * spacing, 0)
-        };
+	};
 
         // execute spsolver: layers, Temperature in K, bias in V/m,
         // #wavefunctions, sheet dopnig density, fermi level accuracy, grid spacing

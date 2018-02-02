@@ -98,6 +98,7 @@ void MC::sp_solve(std::vector<MC::Layer> const & layers,
                 MatrixNd evecs = es.eigenvectors();
 		
 		////  Eigen functions selection criteria
+
 		VectorNd evals_2 {evals}; 
 		for(auto j = 0; j< evals.size();++j)
 		{	
@@ -108,14 +109,14 @@ void MC::sp_solve(std::vector<MC::Layer> const & layers,
 				integrand.data(), integrand.data()+integrand.size());
 			evals_2(j) = evals_2(j)	- tmp;	
 		}
-		////
-		
-		
+		//// now extract the indices of the eigen-energies closest to 
 		auto idx = MC::partial_sort_idx(evals_2.data(), nrWF, evals_2.size(),
                                                 [](std::complex<double> a, std::complex<double> b)
-                {
-                        return a.real() < b.real();
-                }); // alternatively { return std::abs(a) < std::abs(b); }
+						{
+							return a.real() < b.real();
+						}
+						);
+
 
                 // get the first nrWF indices
                 for (int i = 0; i < nrWF; i++)

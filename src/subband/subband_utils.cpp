@@ -25,13 +25,17 @@ void MC::plot_WF(GNUPlotter  &plotter, VectorNd const &_z, VectorNd const &V_z,
         std::vector<double> v_z(V_z_out.data(), V_z_out.data() + V_z_out.size());
 
         plotter.hold_on();
+	plotter.set_line_width(1,1); 
+	plotter.set_line_color("#000000",1);
         plotter.plot(z_out.begin(), v_z.begin(), N, 1);	// plot of energy landscape v_z (in eV) over z_out in nm
 
         for (int it = 0; it < nrWF; it++) // plot of wavefunctions
         {
                 std::vector<double> evec_out(Psi_z_out.col(it).data(),
                                              Psi_z_out.col(it).data() + Psi_z_out.col(it).size());
-                plotter.plot(z_out.begin(), evec_out.begin(), N, it + 2);
+		plotter.set_line_width(2,it+2);
+		plotter.set_line_color("#FF0000",it+2);
+		plotter.plot(z_out.begin(), evec_out.begin(), N, it + 2);
         };
         plotter.hold_off();
 
