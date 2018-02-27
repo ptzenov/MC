@@ -6,7 +6,7 @@
 #define _CHECKERS_HPP_
 
 #include <iostream>
-#include "state.hpp"
+#include <state.hpp>
 
 #define DIAGONAL (false) // should we enable diagonal scattering?
 

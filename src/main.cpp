@@ -1,5 +1,11 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+#include <ctime>
+
+#include <time.h>
+
+
 
 #include <subband/subband.hpp>
 #include <loop.hpp>
@@ -63,7 +69,7 @@ void monte_carlo_randomwalk()
 
 void sp_solve_calculate_and_plot()
 {
-        int nrWF = 15; // considered levels (number of wavefunctions)
+        int nrWF = 5; // considered levels (number of wavefunctions)
         double T = 100.0; // Temperature K
         double rhoD = 1.9e22; // doping density m-3
         double E0 = 1.25e6; // applied field in V/m (bias electric field)
@@ -97,27 +103,34 @@ void sp_solve_calculate_and_plot()
                 MC::Layer(Al_15_GaAs_85, 30 * spacing, 0),
                 MC::Layer(GaAs, 90 * spacing, 0),
                 MC::Layer(Al_15_GaAs_85, 55 * spacing, 0),
-                MC::Layer(GaAs, 79 * spacing, 0),
-                MC::Layer(Al_15_GaAs_85, 25 * spacing, 0),
-                MC::Layer(GaAs, 65 * spacing, 0),
-                MC::Layer(Al_15_GaAs_85, 41 * spacing, 0),
-                MC::Layer(GaAs, 155 * spacing, rhoD),
-                MC::Layer(Al_15_GaAs_85, 30 * spacing, 0),
-                MC::Layer(GaAs, 90 * spacing, 0),
-                MC::Layer(Al_15_GaAs_85, 55 * spacing, 0),
-		MC::Layer(GaAs, 79 * spacing, 0),
-                MC::Layer(Al_15_GaAs_85, 25 * spacing, 0),
-                MC::Layer(GaAs, 65 * spacing, 0),
-                MC::Layer(Al_15_GaAs_85, 41 * spacing, 0),
-                MC::Layer(GaAs, 155 * spacing, rhoD),
-                MC::Layer(Al_15_GaAs_85, 30 * spacing, 0),
-                MC::Layer(GaAs, 90 * spacing, 0),
-                MC::Layer(Al_15_GaAs_85, 55 * spacing, 0)
-	};
+        };
 
         // execute spsolver: layers, Temperature in K, bias in V/m,
         // #wavefunctions, sheet dopnig density, fermi level accuracy, grid spacing
-        MC::sp_solve(layers, T, E0, nrWF, n2D, dE, dz);
+
+        MC::SimParams params;
+        params.Temp_K = T;
+        params.bias_V_m = E0;
+        params.n2D = n2D;
+        params.dE = dE;
+        params.nrWF = nrWF;
+        params.dz = dz;
+
+        std::vector<MC::custom_shared_ptr<double>> res =
+                        MC::sp_solve(layers, params);
+        auto idx = 0;
+        const char* filename = "results.txt";
+        auto now = std::chrono::system_clock::now();
+        auto now_time_t = 	std::chrono::system_clock::to_time_t(now);
+        MC::write_meta_data("TimeStamp: ", std::ctime(&now_time_t),filename,'w');
+        for( auto& Psi: res)
+        {
+                MC::write_meta_data("IDX = ",idx++,filename,'a');
+                auto Npts = std::distance(Psi.begin(),Psi.end());
+                MC::write_meta_data("npts = " , Npts, filename ,'a');
+                MC::write_contiguous_array(Psi.begin(),Psi.end(),Npts,filename,'a');
+        }
+
 }
 
 
@@ -127,6 +140,9 @@ int main(int argc, char** argv)
         sp_solve_calculate_and_plot();
         return 1;
 }
+
+
+
 
 
 

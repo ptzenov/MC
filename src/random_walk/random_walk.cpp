@@ -1,5 +1,6 @@
-#include "random_walk/random_walk.hpp"
-#include "utils/common.hpp"
+#include <utils/common.hpp>
+#include <utils/random.hpp>
+#include <random_walk/random_walk.hpp>
 
 #include <iostream>
 
@@ -64,5 +65,6 @@ bool MC::random_step(MC::RandomWalkState& init, MC::RandomWalkState& fin, size_t
 
         return true;
 }
+
 
 

@@ -7,7 +7,8 @@
 #ifndef _RANDOM_WALK_HPP_
 #define _RANDOM_WALK_HPP__
 
-#include "state.hpp"
+#include <state.hpp>
+
 
 #include <memory>
 #include <assert.h>

@@ -1,8 +1,9 @@
 #include <random>
 #include <iostream>
 
-#include "utils/common.hpp"
-#include "checkers/checkers.hpp"
+#include <utils/common.hpp>
+#include <utils/random.hpp>
+#include <checkers/checkers.hpp>
 
 bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersState& fin, size_t t)
 {

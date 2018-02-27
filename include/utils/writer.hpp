@@ -62,16 +62,42 @@ void write_contiguous_array(ForwardIt first, ForwardIt last,
         }
         catch(std::exception const & e)
         {
-		// do some exception handling here
-		throw e; 
+                // do some exception handling here
+                file.close();
+                throw e;
         }
-
 }
+/***
+ * write up a name-value pair in the file specified by "filename"
+ */
+template<typename T>
+void write_meta_data(const char* name, T val, const char * filename, char mode = 'a')
+{
+        std::ofstream file {};
+        using base = std::fstream::ios_base;
+        base::openmode _mode = mode == 'a' ? base::app : base::out;
+
+        try
+        {
+                file.open(filename,_mode);
+                file << name << " " << val << std::endl;
+                file.flush();
+                file.close();
+        }
+        catch(std::exception const & e)
+        {
+                file.close();
+                throw e;
+        }
+}
+
 };
 
 
 
 
 #endif
+
+
 
 

@@ -1,5 +1,7 @@
 #include <subband/subband.hpp>
+#include <utils/constants.hpp>
 #include <plot/GNUplotter.hpp>
+
 #define _USE_MATH_DEFINES
 #include <cmath>
 
