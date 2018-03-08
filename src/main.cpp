@@ -1,11 +1,10 @@
 #include <iostream>
 #include <vector>
+#include <iterator>
 #include <chrono>
 #include <ctime>
 
 #include <time.h>
-
-
 
 #include <subband/subband.hpp>
 #include <loop.hpp>
@@ -69,7 +68,7 @@ void monte_carlo_randomwalk()
 
 void sp_solve_calculate_and_plot()
 {
-        int nrWF = 5; // considered levels (number of wavefunctions)
+        int nrWF = 7; // considered levels (number of wavefunctions)
         double T = 100.0; // Temperature K
         double rhoD = 1.9e22; // doping density m-3
         double E0 = 1.25e6; // applied field in V/m (bias electric field)
@@ -116,21 +115,25 @@ void sp_solve_calculate_and_plot()
         params.nrWF = nrWF;
         params.dz = dz;
 
-        std::vector<MC::custom_shared_ptr<double>> res =
-                        MC::sp_solve(layers, params);
+        std::vector<MC::SubbandState> subbands =
+                MC::sp_solve(layers, params);
+        
+	// write reuslts to file?
         auto idx = 0;
         const char* filename = "results.txt";
         auto now = std::chrono::system_clock::now();
         auto now_time_t = 	std::chrono::system_clock::to_time_t(now);
         MC::write_meta_data("TimeStamp: ", std::ctime(&now_time_t),filename,'w');
-        for( auto& Psi: res)
+        for( auto& subband: subbands)
         {
-                MC::write_meta_data("IDX = ",idx++,filename,'a');
-                auto Npts = std::distance(Psi.begin(),Psi.end());
+                //get the wave funciton
+                auto& WF = subband.PHI();
+       		MC::write_meta_data("IDX = ",idx++,filename,'a');
+                auto Npts = std::distance(std::begin(WF),std::end(WF));
                 MC::write_meta_data("npts = " , Npts, filename ,'a');
-                MC::write_contiguous_array(Psi.begin(),Psi.end(),Npts,filename,'a');
+                MC::write_contiguous_array(std::begin(WF),std::end(WF),Npts,filename,'a');
         }
-
+	std::cout<< "Done" << std::endl;
 }
 
 
@@ -140,16 +143,4 @@ int main(int argc, char** argv)
         sp_solve_calculate_and_plot();
         return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 

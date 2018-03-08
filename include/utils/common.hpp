@@ -83,18 +83,34 @@ std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N)
 
 
 /*** Numeric functions ***/
-template<typename ForwardIt, typename T>
-T trapz(ForwardIt z0, ForwardIt zN, ForwardIt f0, ForwardIt fN)
+template<typename ForwardIt>
+auto trapz(ForwardIt z0, ForwardIt zN, ForwardIt f0, ForwardIt fN) -> decltype( *z0 * *f0 )
 {
         auto Nz = std::distance(z0,zN);
         auto Nf = std::distance(f0,fN);
         assert(Nz  == Nf);
         assert(Nz > 3);
-        T integral {0.};
-        for(auto i = 1; i < Nz; ++i)
+	using T = decltype(*z0 * *f0) ;
+        T integral {0};
+	for(auto i = 1; i < Nz; ++i)
                 integral+= (f0[i]+f0[i-1])*(z0[i]-z0[i-1])/2.0;
         return integral;
 }
+
+template<typename ForwardIt_z, typename ForwardIt_f>
+auto trapz(ForwardIt_z z0, ForwardIt_z zN, ForwardIt_f f0, ForwardIt_f fN) -> decltype( *z0 * *f0)
+{
+        auto Nz = std::distance(z0,zN);
+        auto Nf = std::distance(f0,fN);
+        assert(Nz  == Nf);
+        assert(Nz > 3);
+        using T = decltype(*z0 * *f0 );
+	T integral {0};
+	for(auto i = 1; i < Nz; ++i)
+                integral+= (f0[i]+f0[i-1])*(z0[i]-z0[i-1])/2.0;
+        return integral;
+}
+
 };
 
 #endif

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iterator>
+#include <algorithm>
 
 #include <subband/subband.hpp>
 #include <utils/constants.hpp>
@@ -10,24 +12,21 @@
 #include <Eigen/Sparse> // using sparse matrix & sparse operations
 
 
-const bool do_plot = true;
 
-std::vector<MC::custom_shared_ptr<double> >
+std::vector<MC::SubbandState>
 MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params)
 {
         using SparseMat = Eigen::SparseMatrix<double>;
         using Triplets = Eigen::Triplet<double>;
 
-        double p = 0.15; // percentage of Al for GaAs / ALGaAs
-        double CBO = MC::e0 * 0.62 * (1.594 * p +
-                                      p * (1 - p) * (0.127 - 1.310 * p)); // conduction band offset in Joule
-        double Error = 1;
+        double Error = 1.0f;
         int iternr = 1; // iteration number of while-loop
-        int N = 0;
-        for (size_t i = 0; i < layers.size(); i++)
+        auto N = std::accumulate(std::begin(layers),std::end(layers),0,[&params]( int& init,
+                                 MC::Layer const& layer)
         {
-                N += std::round(layers[i].thickness / params.dz); // N gives the number of grid points
-        }
+                return init += std::round(layer.thickness/params.dz);
+        }) ;
+        std::cout << " N is = " << N  << std::endl;
 
         VectorNd _z = VectorNd::Zero(N); // "grid vector" with spacing of params.dz
         VectorNd _V0 = VectorNd::Zero(N); // "energy landscape" - vector in Joule
@@ -37,12 +36,14 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
 
         // translating layers in Eigen::VectorNd vectors
         int ctr = 0; // length counter
+
         for (auto l : layers) // for-loop for all layers
         {
-                for (int it = 0; it < std::round(l.thickness / params.dz); it++)
+                for (int it = 0; it < std::round(l.thickness / params.dz); ++it)
                 {
                         _z(ctr) = ctr*params.dz;
-                        _V0(ctr) = l.material.VBO + l.material.E_g - e0 * _z(ctr) * params.bias_V_m;
+                        _V0(ctr) = l.material.VBO + l.material.E_g -
+                                   e0 * _z(ctr) * params.bias_V_m;
                         _meff(ctr) = l.material.m_eff;
                         _doping(ctr) = l.doping;
                         _eps(ctr) = l.material.eps;
@@ -51,10 +52,11 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         }
 
         N = _z.size(); // redundant but just to be sure that N is the real length of _z
-
+        //
+        // preallocate some memory for the algorithm variables
+        //
         MatrixNd Psi_z = MatrixNd::Zero(N, params.nrWF);
-        MatrixNd Psi_sqt = MatrixNd::Zero(N, params.nrWF);
-        MatrixNd Psi_out = MatrixNd::Zero(N, params.nrWF);
+        MatrixNd Psi_sqrt = MatrixNd::Zero(N, params.nrWF);
 
         VectorNd E_val_N = VectorNd::Ones(N);
         VectorNd V_z = VectorNd::Zero(N);
@@ -65,18 +67,20 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         VectorNd ni = VectorNd::Zero(params.nrWF);
         VectorNd occ = VectorNd::Zero(params.nrWF);
         VectorNd E_old = VectorNd::Zero(params.nrWF);
-        VectorNd idxWF = VectorNd::Zero(params.nrWF);
 
+        //eigenvals and eigenvectors
+        Eigen::SelfAdjointEigenSolver<MatrixNd> es;
+        VectorNd evals = VectorNd::Zero(N);
+        VectorNd evals_prime = VectorNd::Zero(N);
+        MatrixNd evecs = MatrixNd::Zero(N,N);
+
+        // save the coefficients in a sparse/symmetric matrix
         VectorNd main_diagonal = VectorNd::Ones(N);
         VectorNd sub_diagonal = VectorNd::Ones(N-1);
-
         SparseMat Msp(N, N);
 
-        /****
-         *
-         * Schrödinger hamiltonian discretization... one part out of loop because of efficiency
-         *
-         * */
+        //Schrödinger hamiltonian discretization.
+        // This part out of loop because of efficiency
 
         // Initialize the Hamiltonian's main and sub-diagonal
         main_diagonal(0) = SQR(MC::hbar)/_meff(0)/(SQR(params.dz));
@@ -93,39 +97,32 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         {
 
                 V_z = _V0 + DV;
+
                 // Compute eigenvalues and eigenvectors
-                Eigen::SelfAdjointEigenSolver<MatrixNd> es;
                 es.computeFromTridiagonal(main_diagonal+V_z, sub_diagonal);
                 assert(!(es.info() && "Success"));
-                VectorNd evals = es.eigenvalues();
-                MatrixNd evecs = es.eigenvectors();
+                evals = es.eigenvalues();
+                evecs = es.eigenvectors();
 
                 ////  Eigen functions selection criteria
-
-                VectorNd evals_2 {evals};
+                // - renormalize the evals wrt their degree of "boundedness"
+                evals_prime  = evals;
                 for(auto j = 0; j< evals.size(); ++j)
                 {
                         VectorNd distr = evecs.col(j).real().cwiseAbs2();
                         VectorNd integrand = distr.cwiseProduct(V_z);
 
-                        auto tmp = trapz<double *,double>(_z.data(),_z.data()+_z.size(),
-                                                          integrand.data(), integrand.data()+integrand.size());
-                        evals_2(j) = evals_2(j)	- tmp;
+                        auto tmp = trapz(_z.data(),_z.data()+_z.size(),
+                                         integrand.data(), integrand.data()+integrand.size());
+                        evals_prime(j) = evals_prime(j)	- tmp;
                 }
                 //// now extract the indices of the eigen-energies closest to
-                auto idx = MC::partial_sort_idx(evals_2.data(), params.nrWF, evals_2.size(),
-                                                [](std::complex<double> a, std::complex<double> b)
+                auto wf_idx = MC::partial_sort_idx(evals_prime.data(), params.nrWF, evals_prime.size(),
+                                                   [](std::complex<double> a, std::complex<double> b)
                 {
                         return a.real() < b.real();
                 }
-                                               );
-
-
-                // get the first params.nrWF indices
-                for (int i = 0; i < params.nrWF; i++)
-                {
-                        idxWF(i) = idx[i];
-                }
+                                                  );
 
                 // E_old contains eigenvalues of last iteration => needed for error calc. later
                 E_old = E_vals;
@@ -133,38 +130,38 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
                 // get the #params.nrWF lowest eigenvalues and put them into a column vector
                 for (int i = 0; i < params.nrWF; i++)
                 {
-                        E_vals(i) = evals(idxWF(i));
+                        E_vals(i) = evals(wf_idx[i]);
                 }
 
 
                 // get the corresponding eigenvectors (colums of the matrix Psi_z)
                 for (int i = 0; i < params.nrWF; i++)
                 {
-                        Psi_z.col(i) = evecs.col(idxWF(i)).real(); // maybe .real()
+                        Psi_z.col(i) = evecs.col(wf_idx[i]).real(); // maybe .real()
                 }
+                Psi_sqrt = Psi_z.cwiseAbs2();
 
                 // normalization of probability density fct Psi²
                 for (int col = 0; col < params.nrWF; col++)
                 {
-                        E_vec_sqt = Psi_z.col(col).cwiseAbs2();
-                        double Trapz = trapz<double*, double>
-                                       (_z.data(), _z.data() + _z.size() - 1,
-                                        E_vec_sqt.data(), E_vec_sqt.data() + E_vec_sqt.size() - 1);
+                        auto Trapz = trapz(_z.data(), _z.data() + _z.size(),
+                                           Psi_sqrt.col(col).data(),
+                                           Psi_sqrt.col(col).data() + Psi_sqrt.col(col).size());
                         Psi_z.col(col) = Psi_z.col(col) / sqrt(Trapz);
                 }
 
                 // will be needed later a few times
-                Psi_sqt = Psi_z.cwiseAbs2();
+                Psi_sqrt = Psi_z.cwiseAbs2();
 
                 // Fermi - Dirac
-                fermi_dirac(ni, E_vals, _meff, idxWF, params.Temp_K, params.nrWF, params.dE, params.n2D);
+                fermi_dirac(Psi_sqrt, E_vals, _meff, params);
                 occ = ni / params.n2D;
 
                 // charge density due to doping
                 rho = _doping * e0;
                 for (int col = 0; col < params.nrWF; col++)
                 {
-                        rho = rho - e0*ni(col)*Psi_sqt.col(col);
+                        rho = rho - e0*ni(col)*Psi_sqrt.col(col);
                 }
 
                 // Poisson solver
@@ -202,32 +199,54 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         std::cout << "Schroedinger poisson solver iteration completed! Displaying eigenstates" << std::endl;
         std::cout << std::endl << std::endl;
 
-// gnuplotter main: plot all WF and energy landscape
-        if (do_plot)
+        // Plot the wavefucntions with GNUplot
         {
                 GNUPlotter plotter {};
-                double sc = CBO / e0 / Psi_sqt.maxCoeff(); // scaling factor for plot
+                double sc = 1e-9f ;
                 for (int col = 0; col < params.nrWF; col++) // Preparing Psi_z for plotting
                 {
-                        Psi_out.col(col) = sc*Psi_sqt.col(col) + E_val_N * E_vals(col) / e0;
+                        Psi_sqrt.col(col) = sc*Psi_sqrt.col(col) + E_val_N * E_vals(col) / e0;
                 };
-                plot_WF(plotter, _z, V_z, params.nrWF, Psi_out); // plots wavefunctions in scale nm and eV
+                plot_WF(plotter, _z, V_z, params.nrWF, Psi_sqrt);
         }
-        MatrixNd results = MatrixNd::Zero(N,params.nrWF+2);
-        results.col(0) = _z;
-        results.col(1) = V_z;
-        for (int i=0; i< params.nrWF; ++i)
-                results.col(i+2) = Psi_z.col(i);
 
-        std::vector<MC::custom_shared_ptr<double> > res;
-        for (int i=0; i< params.nrWF+2; ++i)
+        // Now transform them into subbands and return
+        // inner product binary operations op1, and op2,
+        // using op1_type = Ret(*)(const Type1 &a, const Type2 &b);
+        // using op2_type = Ret(*)(const Type1 &a, const Type2 &b);
+        // acc = op1(acc, op2(*first1, *first2))
+        auto op1 = [&params](double const & acc, double const & b )
         {
-                MC::custom_shared_ptr<double> dummy (N);
-                for(int j=0; j< N ; ++j)
-                        dummy[j] = results.col(i)(j);
-                res.push_back(dummy);
+                return acc+params.dz*b;
+        };
+        auto op2 = [](double const & mass, double const & WF)
+        {
+                return mass*SQR(WF);
+        };
+
+        // need to COPY the EIGEN data to our own heap structure since EIGEN frees its memory!
+        double * z_on_heap = new double[N];
+        std::copy(_z.data(),_z.data()+N,z_on_heap);
+
+
+        std::vector<MC::SubbandState>	subbands;
+        for (auto col = 0U; col < Psi_z.cols(); ++col)
+        {
+                double * Psi_on_heap = new double[N];
+                std::copy(Psi_z.col(col).data(), Psi_z.col(col).data()+N,Psi_on_heap);
+
+                double effmass = std::inner_product(_meff.data(),_meff.data()+N,
+                                                    Psi_on_heap,0,op1,op2);
+                double centroid = std::inner_product(z_on_heap,z_on_heap+N,
+                                                     Psi_on_heap,0,op1,op2);
+
+                subbands.push_back( MC::SubbandState {z_on_heap,
+                                                      Psi_on_heap,N,E_vals(col),centroid,effmass
+                                                     }
+                                  );
         }
-        return res;
+
+        return subbands;
 }
 
 

@@ -7,7 +7,8 @@
 
 // internal headers
 #include <state.hpp>
-#include <utils/common.hpp>
+#include <iostream>
+
 #include <utils/memory.hpp>
 #include <plot/GNUplotter.hpp>
 
@@ -22,24 +23,47 @@ using VectorNd = Eigen::Matrix<double, Eigen::Dynamic, 1>;
 namespace MC
 {
 
+//is it ok to be double ?
 class SubbandState: public AbstractState
 {
 private:
-        // R_TYPE -> real
-	MC::custom_shared_ptr<R_TYPE> z; // z-grid
-	MC::custom_shared_ptr<R_TYPE> Phi_z; // wave-funciton
+        // double -> real
+        // !!! Make const to prevent modifications on the shared resource!
+        MC::custom_shared_ptr<const double> _z; // z-grid
+        MC::custom_shared_ptr<const double> _phi; // wave-funciton
 
-        // wave vector in the transverse direction
-        size_t Npts;
-        double E; // eigen-energy
-        double k_x;
-        double k_y;
-        double m_eff; // effective mass - weighted average!
+        // number of grid points in z-direction
+        size_t _Npts;
+
+        double _E; // subband eigen-energy
+
+        // centroid (coordinate) of the WF
+        double _centroid;
+        // weighted average of the subband effective mass
+        double _meff;
 public:
-        SubbandState(MC::custom_shared_ptr<R_TYPE> z_in, MC::custom_shared_ptr<R_TYPE> Phi_in, size_t N,
-                     double E0, double kx, double ky);
+        SubbandState(MC::custom_shared_ptr<const double> z,
+                     MC::custom_shared_ptr<const double> phi, size_t N,
+                     double E, double centroid, double meff);
 
+	SubbandState(double* z, double* phi, size_t N, double E, double centroid, double meff);
+
+	SubbandState() =  delete; 
 	
+
+	// copy constructors! 
+	SubbandState(const SubbandState & other) = default;  
+	SubbandState(SubbandState&& other)= default; 
+	
+	SubbandState& operator=(const SubbandState & other) = default; 
+	SubbandState& operator=(SubbandState&& other)= default ; 
+	~SubbandState() = default; 
+	
+	MC::custom_shared_ptr<const double>& PHI() { return _phi; }	
+	MC::custom_shared_ptr<const double>& z()   { return _z; }	
+	double & E()   { return _E; }
+	double & centroid() {return _centroid;}
+	double & meff() {return _meff;}	
 
 };
 
@@ -74,8 +98,8 @@ struct SimParams
         double dz;
 };
 
-std::vector<MC::custom_shared_ptr<R_TYPE> >
-sp_solve(std::vector<MC::Layer> const & layers,  const SimParams& params);
+std::vector<MC::SubbandState> sp_solve(std::vector<MC::Layer> const & layers,
+                const SimParams& params);
 
 /**
  * Utility functions
@@ -83,19 +107,13 @@ sp_solve(std::vector<MC::Layer> const & layers,  const SimParams& params);
 void material_properties(MC::Material &mat, double const E_g_Joule,
                          double const VBO_Joule, double const meff_kg, const double abs_permittivity);
 
-void fermi_dirac(VectorNd &ni, VectorNd const &E_vals, VectorNd const &_meff,
-                 VectorNd const &idxWF, const double Temp, const int nrWF, const double dE, const double n2D);
+void fermi_dirac(MatrixNd const & Psi_sqrt, VectorNd const &E_vals,
+                 VectorNd const & meff,SimParams const & params);
 
 void plot_WF(GNUPlotter &plotter, VectorNd const &_z, VectorNd const &V_z,
              const int nrWF, MatrixNd const &Psi_z_out);
 };
-
-
-
 #endif
-
-
-
 
 
 
