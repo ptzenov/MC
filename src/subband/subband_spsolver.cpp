@@ -13,7 +13,7 @@
 
 
 
-std::vector<MC::SubbandState>
+std::vector<MC::Subband>
 MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params)
 {
         using SparseMat = Eigen::SparseMatrix<double>;
@@ -22,7 +22,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         double Error = 1.0f;
         int iternr = 1; // iteration number of while-loop
         size_t N = std::accumulate(std::begin(layers),std::end(layers),0,[&params]( int& init,
-                                 MC::Layer const& layer)
+                                   MC::Layer const& layer)
         {
                 return init += std::round(layer.thickness/params.dz);
         }) ;
@@ -84,7 +84,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
 
         // Initialize the Hamiltonian's main and sub-diagonal
         main_diagonal(0) = SQR(MC::hbar)/_meff(0)/(SQR(params.dz));
-        for(int  _idx = 1; _idx < N; ++_idx)
+        for(auto  _idx = 1U; _idx < N; ++_idx)
         {
                 auto m_negative = (_meff(_idx)+_meff(_idx-1))/2.0;
                 auto m_postitive = (_meff(_idx)+_meff(_idx+1 == N ? N-1:_idx+1))/2.0;
@@ -173,7 +173,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
                 // the sparse matrix is built column-major
                 triplet_vec.reserve(3 * N - 2);
                 triplet_vec.push_back(Triplets(0, 0, md));
-                for (int i = 1; i < N; i++)
+                for (auto i = 1U; i < N; ++i)
                 {
                         triplet_vec.push_back(Triplets(i, i - 1, nd));
                         triplet_vec.push_back(Triplets(i - 1, i, nd));
@@ -196,15 +196,15 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         std::cout << "Schroedinger poisson solver iteration completed! Displaying eigenstates" << std::endl;
 
         // Plot the wavefucntions with GNUplot
+        {
+                GNUPlotter plotter {};
+                double sc = 1e-9f ;
+                for (int col = 0; col < params.nrWF; col++) // Preparing Psi_z for plotting
                 {
-                        GNUPlotter plotter {};
-                        double sc = 1e-9f ;
-                        for (int col = 0; col < params.nrWF; col++) // Preparing Psi_z for plotting
-                        {
-                                Psi_sqrt.col(col) = sc*Psi_sqrt.col(col) + E_val_N * E_vals(col) / e0;
-                        };
-                        plot_WF(plotter, _z, V_z, params.nrWF, Psi_sqrt);
-                }
+                        Psi_sqrt.col(col) = sc*Psi_sqrt.col(col) + E_val_N * E_vals(col) / e0;
+                };
+                plot_WF(plotter, _z, V_z, params.nrWF, Psi_sqrt);
+        }
         // Now transform them into subbands and return
         // inner product binary operations op1, and op2,
         // using op1_type = Ret(*)(const Type1 &a, const Type2 &b);
@@ -224,7 +224,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         std::copy(_z.data(),_z.data()+N,z_on_heap);
         MC::custom_shared_ptr<double> shared_z {z_on_heap,N};
 
-        std::vector<MC::SubbandState>	subbands;
+        std::vector<MC::Subband>	subbands;
         for (auto col = 0U; col < Psi_z.cols(); ++col)
         {
                 double * Psi_on_heap = new double[N];
@@ -236,15 +236,12 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
                                                      Psi_on_heap,0,op1,op2);
                 // 2x subband inplace constructions + 2 move constr + 2x deletes
                 subbands.push_back(
-                        MC::SubbandState {shared_z, Psi_on_heap,N,E_vals(col),centroid,effmass}
+                        MC::Subband {shared_z, Psi_on_heap,N,E_vals(col),centroid,effmass}
                 );
 
         }
         return subbands;
 }
-
-
-
 
 
 

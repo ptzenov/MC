@@ -38,7 +38,7 @@ private:
         {
                 void operator()(_Tp* ptr)
                 {
-			delete[] ptr;
+                        delete[] ptr;
                 }
         };
 
@@ -53,7 +53,7 @@ public:
 
         custom_shared_ptr(_Tp* raw_ptr, size_t len): _data(raw_ptr,_deleter()), _N(len)
         {
-	}
+        }
 
 
         // copy constructor
@@ -78,7 +78,7 @@ public:
         custom_shared_ptr& operator=(custom_shared_ptr<_Yp> const & other)
         {
                 MSG("copy = operator");
-		if ( &other == this)
+                if ( &other == this)
                         return *this;
                 // constructs a copy of other! increments the ref ctr
                 custom_shared_ptr<_Tp> tmp(other);
@@ -95,8 +95,8 @@ public:
         template<typename _Yp>
         custom_shared_ptr& operator=(custom_shared_ptr<_Yp> && other)
         {
-                
-		// copy other into a temp;
+
+                // copy other into a temp;
                 custom_shared_ptr<_Yp> tmp (std::forward(other));
                 tmp.data().swap(_data); // swap the temp with this -> calls std::share_ptr::swap(..);
                 this->_N = tmp._N;  /// don't forget to copy the sizes;
@@ -130,6 +130,17 @@ public:
                 return _data.get()+this->_N;
         }
 
+        inline _Tp* begin() const
+        {
+                return _data.get();
+        }
+
+        inline _Tp* end() const
+        {
+                return _data.get()+this->_N;
+        }
+
+
         inline const size_t & size() const
         {
                 return _N;       // number of elements in the array
@@ -139,12 +150,13 @@ public:
                 return _data;
         }
 };
-
+// 
 // Insert arbitrary number of variable sized arrays of T inside a vector containing custom_shared_ptr<T>
 // usage: recurrent_insert_homog_data(vec,first,N, ... variadic ...)
 // where variadic can be any (even) number of arguments coming in pairs:
 // ... Itarator first1, size_type N1,Itartor first2,size_type N2, Iterator first3, size_type N3 ...
 //  with first# pointing to the first element in the array # and N# specifying the array's length.
+// 
 
 // end of the recurrsion
 template<typename T>
@@ -167,6 +179,7 @@ void recurrent_insert_homog_data(std::vector<MC::custom_shared_ptr<T>>& vec,Iter
 
 };
 #endif
+
 
 
 

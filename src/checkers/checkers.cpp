@@ -71,7 +71,7 @@ bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersStat
                 /*
                  *periodic boundary in y-direction;
                  * */
-                if( (dy == -(Ny-1)) && dx == 0) s_prob =  bias;
+                if( (dy == -static_cast<int>(_Ny-1)) && dx == 0) s_prob =  bias;
         }
 
         //draw a uniform random num from 0 to 1 over 1000 bins

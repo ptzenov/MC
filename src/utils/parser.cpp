@@ -54,7 +54,6 @@ std::vector<std::string>  getOptionFromFile(char* filename, std::string option){
 	}
 
 	std::vector<std::string> result;
-	bool found  = false;
 
 	// skip through the file until the first non commented or empty line
 	if (file.is_open()){
@@ -76,7 +75,6 @@ std::vector<std::string>  getOptionFromFile(char* filename, std::string option){
 			std::vector<std::string> tokens = tokenize(line,DELIMITER);
 			if(tokens.size() !=0)
 				if( tokens[0].compare(option) == 0 ){
-					found = true;
 					for (size_t i=1; i<tokens.size();i++)
 						result.push_back(tokens[i]);
 					std::cout << "Option: " << option << " found. Value is:\n";

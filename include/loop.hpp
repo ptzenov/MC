@@ -28,7 +28,7 @@ void main_loop(RandomIt first, RandomIt last,
 {
         assert(num_particles > 0);
         assert(Nt > 0);
-        auto distance = std::distance(first, last);
+        size_t distance = std::distance(first, last);
         assert(num_particles <= distance);
 
         // pick a random state and give it a particle -> draw without replacement!
@@ -44,26 +44,27 @@ void main_loop(RandomIt first, RandomIt last,
                 first[loc].set_pID(++p_id);
         }
 
-
-        for(size_t t=0; t<Nt; ++t)
+        for(auto t=0U; t<Nt; ++t)
         {
                 // for each particle p
-                for(size_t idx = 0; idx< particle_locs.size(); ++idx)
+                for(auto idx = 0U; idx< particle_locs.size(); ++idx)
                 {
                         auto init_loc = particle_locs[idx];
 			// draw a random target location
                         auto fin_loc = draw_random_uniform_int<std::mt19937,int>(0,distance-1); 
 
-                        // select a target state
-                        auto& initstate = first[init_loc];
+                        // get refernce to states
+			auto& initstate = first[init_loc];
                         auto& finstate = first[fin_loc];
 
+			// randomly select a scatterrer
                         Scatterer scatter_func = scatterers[
 				draw_random_uniform_int<std::mt19937,int>(0,scatterers.size()-1)];
-                        bool scattered = scatter_func(initstate,finstate,t);
+                        // scatter
+			bool scattered = scatter_func(initstate,finstate,t);
                         if(scattered)
                                 particle_locs[idx] = fin_loc;
-
+			// record something... if needed
                         recorder.post_process(initstate,finstate,scattered,t);
                 }
         }

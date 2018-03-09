@@ -21,13 +21,13 @@ void monte_carlo_checkers()
         size_t Nt = 10000;
         size_t num_particles = 1;
 
-        int Nx = 10;
-        int Ny = 10;
+        size_t Nx = 10;
+        size_t Ny = 10;
 
         std::vector<MC::CheckersState> states;
 
-        for (auto x= 0; x <Nx; ++x)
-                for (auto y=0; y< Ny; ++y)
+        for (auto x= 0U; x <Nx; ++x)
+                for (auto y=0U; y< Ny; ++y)
                         states.push_back(MC::CheckersState(x,y));
         MC::RecordCheckers<decltype(states.begin())> record {Nx,Ny,states.begin(),states.end()};
         MC::CheckersScatterer scatterer {Nx,Ny};
@@ -116,7 +116,7 @@ void sp_solve_calculate_and_plot()
         params.nrWF = nrWF;
         params.dz = dz;
 
-        std::vector<MC::SubbandState> subbands =
+        std::vector<MC::Subband> subbands =
                 MC::sp_solve(layers, params);
         
 	// write reuslts to file?

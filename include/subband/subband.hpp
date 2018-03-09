@@ -24,7 +24,7 @@ namespace MC
 {
 
 //is it ok to be double ?
-class SubbandState: public AbstractState
+class Subband
 {
 private:
         // double -> real
@@ -34,47 +34,150 @@ private:
 
         // number of grid points in z-direction
         size_t _Npts;
-
-        double _E; // subband eigen-energy
-
+        // subband eigen-energy
+        double _E;
         // centroid (coordinate) of the WF
         double _centroid;
-        // weighted average of the subband effective mass
+        // weighted average of the subband effective mass parallel to the growth direction
         double _meff;
-public:
-        SubbandState(MC::custom_shared_ptr<const double> z,
-                     MC::custom_shared_ptr<const double> phi, size_t N,
-                     double E, double centroid, double meff);
 
-        SubbandState(double* z, double* phi, size_t N, double E, double centroid, double meff);
+public:
+        Subband(MC::custom_shared_ptr<const double> z,
+                MC::custom_shared_ptr<const double> phi, size_t N,
+                double E, double centroid, double meff);
+        Subband(double* z, double* phi, size_t N, double E, double centroid,
+                double meff);
 
         // provide mixed constructors
-        SubbandState(double* z, MC::custom_shared_ptr<const double> phi,
-                     size_t N, double E, double centroid, double meff);
-        SubbandState(MC::custom_shared_ptr<const double> z, double* phi,
-                     size_t N, double E, double centroid, double meff);
+        Subband(double* z, MC::custom_shared_ptr<const double> phi,
+                size_t N, double E, double centroid, double meff);
+        Subband(MC::custom_shared_ptr<const double> z, double* phi,
+                size_t N, double E, double centroid, double meff);
 
-        SubbandState() =  delete;
+        Subband() =  delete;
 
 
         // copy constructors!
-        SubbandState(const SubbandState & other) = default;
-        SubbandState(SubbandState&& other)= default;
+        Subband(const Subband & other) = default;
+        Subband(Subband&& other)= default;
 
-        SubbandState& operator=(const SubbandState & other) = default;
-        SubbandState& operator=(SubbandState&& other)= default ;
-        ~SubbandState()
+        Subband& operator=(const Subband & other) = default;
+        Subband& operator=(Subband&& other)= default ;
+        ~Subband()
         {
                 ;
         }
 
-        MC::custom_shared_ptr<const double>  & PHI();
-        MC::custom_shared_ptr<const double>  & z();
-        double & E();
+        MC::custom_shared_ptr<const double> const & PHI() const ;
+	MC::custom_shared_ptr<const double> const & z() const ;
+ 
+ 	double & E();
         double & centroid();
         double & meff();
-
 };
+
+class SubbandState:public AbstractState
+{
+private:
+        MC::Subband const & _subband;
+        double _kx;
+        double _ky;
+        double _meff_xy;
+        size_t _idx;
+public:
+        explicit SubbandState(MC::Subband& subband,
+                              double kx, double ky, double meff_xy, size_t idx);
+
+        SubbandState() = delete;
+        SubbandState(SubbandState& other) = default;
+        SubbandState(SubbandState&& other) = default;
+        SubbandState& operator=(SubbandState& other) = default;
+        SubbandState& operator=(SubbandState&& other) = default;
+        ~SubbandState()
+        {
+                ;
+        }
+        
+	size_t idx() const;
+        double kx() const;
+        double ky() const;
+        double meff_xy() const;
+        MC::Subband const & subband();
+};
+
+/************** Subband scattering mechanisms *****************/
+/*********
+ *
+ * LO-phonon scatterrer
+ *
+ *********/
+class LOphononScatterer
+{
+private:
+        // LO-phonon energy
+        double _E_LO;
+        std::unique_ptr<double []> rates; // the precomputed rates
+public:
+        LOphononScatterer(std::vector<MC::SubbandState> const & states,
+                          double E_LO);
+        bool operator()(MC::SubbandState&, MC::SubbandState&, size_t t);
+};
+
+/*********
+ *
+ * IR scatterrer
+ *
+ *********/
+
+// TODO
+
+
+
+/*********
+ *
+ * Impurity scatterrer
+ *
+ *********/
+
+// TODO
+
+
+/*********
+ *
+ * LA-phonon scatterrer
+ *
+ *********/
+
+// TODO
+
+
+/*********
+ *
+ * e-e scatterrer
+ *
+ *********/
+
+// TODO
+
+
+/*********
+ *
+ * optical-field scatterrer
+ *
+ *********/
+
+// TODO
+
+
+
+/*********
+ *
+ * resonant-tunneling  scatterrer
+ *
+ *********/
+
+// TODO
+
 
 
 /************** Schroedinger-Poisson solver *******************/
@@ -107,8 +210,8 @@ struct SimParams
         double dz;
 };
 
-std::vector<MC::SubbandState> sp_solve(std::vector<MC::Layer> const & layers,
-                                       const SimParams& params);
+std::vector<MC::Subband> sp_solve(std::vector<MC::Layer> const & layers,
+                                  const SimParams& params);
 
 /**
  * Utility functions
@@ -123,6 +226,9 @@ void plot_WF(GNUPlotter &plotter, VectorNd const &_z, VectorNd const &V_z,
              const int nrWF, MatrixNd const &Psi_z_out);
 };
 #endif
+
+
+
 
 
 

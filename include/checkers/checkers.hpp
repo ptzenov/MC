@@ -63,8 +63,8 @@ template< typename RandomIt>
 class RecordCheckers
 {
 private:
-        int _Nx; // num elements in x
-        int _Ny; // num elements in y
+        size_t _Nx; // num elements in x
+        size_t _Ny; // num elements in y
 
         RandomIt _first;// first element of the states
         RandomIt _last;// last element of the states
@@ -73,24 +73,24 @@ private:
         {
 
                 // max num digits is
-                int num_digits = int(ceil(log10((double)_Nx*_Ny)));
-                auto distance = std::distance(_first,_last);
+                int num_digits = (ceil(log10((double)_Nx*_Ny)));
+                size_t distance = std::distance(_first,_last);
                 assert(distance == _Nx*_Ny);
                 std::cout << std::endl;
 
-                for(int n = 0; n<_Ny; n++)
+                for(auto n = 0U; n<_Ny; ++n)
                 {
                         std::cout<<"__";
-                        for(int k=0; k<num_digits; k++)
+                        for(auto k=0; k<num_digits; ++k)
                         {
                                 std::cout<<"_";
                         }
                         std::cout<<"_  ";
                 }
                 std::cout<<"\n";
-                for (int x=0; x<_Nx; x++)
+                for (auto x=0U; x<_Nx; ++x)
                 {
-                        for (int y=0; y < _Ny; y++)
+                        for (auto y=0U; y < _Ny; ++y)
                         {
                                 std::cout<<"|_";
                                 int particle_id = _first[y+x*_Ny].get_pID();
@@ -117,30 +117,30 @@ private:
                 }
         }
 public:
-        RecordCheckers(int nx,int ny, RandomIt first, RandomIt last): _Nx(nx),_Ny(ny), _first {first}, _last {last}
+        RecordCheckers(size_t Nx,size_t Ny, RandomIt first, RandomIt last): _Nx(Nx),_Ny(Ny), _first {first}, _last {last}
         {
                 ;
         }
 
 
-	RecordCheckers(const RecordCheckers& other) = delete; 
-	RecordCheckers& operator=(const RecordCheckers& other) = delete; 
-	RecordCheckers(RecordCheckers&& other) = delete; 
-	RecordCheckers& operator=(RecordCheckers&& other) = delete; 
+        RecordCheckers(const RecordCheckers& other) = delete;
+        RecordCheckers& operator=(const RecordCheckers& other) = delete;
+        RecordCheckers(RecordCheckers&& other) = delete;
+        RecordCheckers& operator=(RecordCheckers&& other) = delete;
 
-	inline  int get_Nx() const
+        inline  size_t get_Nx() const
         {
                 return _Nx;
         }
-        inline int get_Ny() const
+        inline size_t get_Ny() const
         {
                 return _Ny;
         }
-	void post_process(CheckersState& init, CheckersState& fin, bool scattered, size_t t)
-	{
-		if(scattered)
-			output();
-	}
+        void post_process(CheckersState& init, CheckersState& fin, bool scattered, size_t t)
+        {
+                if(scattered)
+                        output();
+        }
 };
 /**
  * scatterer functor
@@ -148,14 +148,15 @@ public:
 class CheckersScatterer
 {
 private:
-        int Nx;
-        int Ny;
+        size_t _Nx;
+        size_t _Ny;
 public:
-	CheckersScatterer(int in_Nx, int in_Ny): Nx{in_Nx}, Ny{in_Ny}{;} 
+        CheckersScatterer(size_t Nx, size_t Ny): _Nx {Nx}, _Ny {Ny} {;}
         bool operator()(CheckersState&, CheckersState&, size_t t);
 };
 
 
 }
 #endif
+
 
