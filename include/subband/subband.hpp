@@ -46,24 +46,33 @@ public:
                      MC::custom_shared_ptr<const double> phi, size_t N,
                      double E, double centroid, double meff);
 
-	SubbandState(double* z, double* phi, size_t N, double E, double centroid, double meff);
+        SubbandState(double* z, double* phi, size_t N, double E, double centroid, double meff);
 
-	SubbandState() =  delete; 
-	
+        // provide mixed constructors
+        SubbandState(double* z, MC::custom_shared_ptr<const double> phi,
+                     size_t N, double E, double centroid, double meff);
+        SubbandState(MC::custom_shared_ptr<const double> z, double* phi,
+                     size_t N, double E, double centroid, double meff);
 
-	// copy constructors! 
-	SubbandState(const SubbandState & other) = default;  
-	SubbandState(SubbandState&& other)= default; 
-	
-	SubbandState& operator=(const SubbandState & other) = default; 
-	SubbandState& operator=(SubbandState&& other)= default ; 
-	~SubbandState() = default; 
-	
-	MC::custom_shared_ptr<const double>& PHI() { return _phi; }	
-	MC::custom_shared_ptr<const double>& z()   { return _z; }	
-	double & E()   { return _E; }
-	double & centroid() {return _centroid;}
-	double & meff() {return _meff;}	
+        SubbandState() =  delete;
+
+
+        // copy constructors!
+        SubbandState(const SubbandState & other) = default;
+        SubbandState(SubbandState&& other)= default;
+
+        SubbandState& operator=(const SubbandState & other) = default;
+        SubbandState& operator=(SubbandState&& other)= default ;
+        ~SubbandState()
+        {
+                ;
+        }
+
+        MC::custom_shared_ptr<const double>  & PHI();
+        MC::custom_shared_ptr<const double>  & z();
+        double & E();
+        double & centroid();
+        double & meff();
 
 };
 
@@ -99,7 +108,7 @@ struct SimParams
 };
 
 std::vector<MC::SubbandState> sp_solve(std::vector<MC::Layer> const & layers,
-                const SimParams& params);
+                                       const SimParams& params);
 
 /**
  * Utility functions
@@ -114,6 +123,8 @@ void plot_WF(GNUPlotter &plotter, VectorNd const &_z, VectorNd const &V_z,
              const int nrWF, MatrixNd const &Psi_z_out);
 };
 #endif
+
+
 
 
 

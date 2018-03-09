@@ -14,6 +14,7 @@
 
 #include <utils/writer.hpp>
 #include <utils/constants.hpp>
+#include <utils/debug/macros.hpp>
 
 void monte_carlo_checkers()
 {
@@ -68,7 +69,7 @@ void monte_carlo_randomwalk()
 
 void sp_solve_calculate_and_plot()
 {
-        int nrWF = 7; // considered levels (number of wavefunctions)
+        int nrWF = 2; // considered levels (number of wavefunctions)
         double T = 100.0; // Temperature K
         double rhoD = 1.9e22; // doping density m-3
         double E0 = 1.25e6; // applied field in V/m (bias electric field)
@@ -133,7 +134,6 @@ void sp_solve_calculate_and_plot()
                 MC::write_meta_data("npts = " , Npts, filename ,'a');
                 MC::write_contiguous_array(std::begin(WF),std::end(WF),Npts,filename,'a');
         }
-	std::cout<< "Done" << std::endl;
 }
 
 
@@ -141,6 +141,9 @@ int main(int argc, char** argv)
 {
 
         sp_solve_calculate_and_plot();
-        return 1;
+
+	std::cout<< "Done" << std::endl;
+
+	return 1;
 }
 

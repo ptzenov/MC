@@ -10,9 +10,10 @@
 #include <algorithm>
 #include <vector>
 #include <assert.h>
+#include <iostream>
 
-
-// change the precision at will.
+		
+// change the p recision at will.
 #define C_TYPE std::complex<double>
 #define R_TYPE double
 

@@ -21,7 +21,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
 
         double Error = 1.0f;
         int iternr = 1; // iteration number of while-loop
-        auto N = std::accumulate(std::begin(layers),std::end(layers),0,[&params]( int& init,
+        size_t N = std::accumulate(std::begin(layers),std::end(layers),0,[&params]( int& init,
                                  MC::Layer const& layer)
         {
                 return init += std::round(layer.thickness/params.dz);
@@ -188,28 +188,23 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
 
                 Error = (E_vals - E_old).cwiseAbs().maxCoeff();
 
-                std::cout << std::endl << std::endl;
                 std::cout << "iteration " << iternr <<
                           " completed. Maximum error (ev): " << Error / e0 << std::endl;
-                std::cout << std::endl << std::endl;
                 iternr++;
         } // end of while loop
 
-        std::cout << std::endl << std::endl;
         std::cout << "Schroedinger poisson solver iteration completed! Displaying eigenstates" << std::endl;
-        std::cout << std::endl << std::endl;
 
         // Plot the wavefucntions with GNUplot
-        {
-                GNUPlotter plotter {};
-                double sc = 1e-9f ;
-                for (int col = 0; col < params.nrWF; col++) // Preparing Psi_z for plotting
                 {
-                        Psi_sqrt.col(col) = sc*Psi_sqrt.col(col) + E_val_N * E_vals(col) / e0;
-                };
-                plot_WF(plotter, _z, V_z, params.nrWF, Psi_sqrt);
-        }
-
+                        GNUPlotter plotter {};
+                        double sc = 1e-9f ;
+                        for (int col = 0; col < params.nrWF; col++) // Preparing Psi_z for plotting
+                        {
+                                Psi_sqrt.col(col) = sc*Psi_sqrt.col(col) + E_val_N * E_vals(col) / e0;
+                        };
+                        plot_WF(plotter, _z, V_z, params.nrWF, Psi_sqrt);
+                }
         // Now transform them into subbands and return
         // inner product binary operations op1, and op2,
         // using op1_type = Ret(*)(const Type1 &a, const Type2 &b);
@@ -227,7 +222,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         // need to COPY the EIGEN data to our own heap structure since EIGEN frees its memory!
         double * z_on_heap = new double[N];
         std::copy(_z.data(),_z.data()+N,z_on_heap);
-
+        MC::custom_shared_ptr<double> shared_z {z_on_heap,N};
 
         std::vector<MC::SubbandState>	subbands;
         for (auto col = 0U; col < Psi_z.cols(); ++col)
@@ -237,17 +232,19 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
 
                 double effmass = std::inner_product(_meff.data(),_meff.data()+N,
                                                     Psi_on_heap,0,op1,op2);
-                double centroid = std::inner_product(z_on_heap,z_on_heap+N,
+                double centroid = std::inner_product(std::begin(shared_z),std::end(shared_z),
                                                      Psi_on_heap,0,op1,op2);
+                // 2x subband inplace constructions + 2 move constr + 2x deletes
+                subbands.push_back(
+                        MC::SubbandState {shared_z, Psi_on_heap,N,E_vals(col),centroid,effmass}
+                );
 
-                subbands.push_back( MC::SubbandState {z_on_heap,
-                                                      Psi_on_heap,N,E_vals(col),centroid,effmass
-                                                     }
-                                  );
         }
-
         return subbands;
 }
+
+
+
 
 
 

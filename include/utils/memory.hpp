@@ -11,6 +11,8 @@
 #include <iostream>
 #include <vector>
 
+#include <utils/debug/macros.hpp>
+
 /****** Memory Management headers *********/
 namespace MC
 {
@@ -36,7 +38,7 @@ private:
         {
                 void operator()(_Tp* ptr)
                 {
-                        delete[] ptr;
+			delete[] ptr;
                 }
         };
 
@@ -46,13 +48,12 @@ public:
         explicit custom_shared_ptr(size_t len):
                 _data (new _Tp[len],_deleter()), _N (len)
         {
-                ;
         }
 
 
         custom_shared_ptr(_Tp* raw_ptr, size_t len): _data(raw_ptr,_deleter()), _N(len)
         {
-        }
+	}
 
 
         // copy constructor
@@ -60,15 +61,13 @@ public:
         custom_shared_ptr(custom_shared_ptr<_Yp> const & other)
                 : _data (other.data()), _N {other.size()}
         {
-                ;
         }
 
         // move constructor
         template<typename _Yp>
         custom_shared_ptr(custom_shared_ptr<_Yp> && other)
-                : _data {std::move(other.data())}, _N {other.size()}
+                : _data {std::forward(other.data())}, _N {other.size()}
         {
-                ;
         }
 
         /**
@@ -78,7 +77,8 @@ public:
         template<typename _Yp>
         custom_shared_ptr& operator=(custom_shared_ptr<_Yp> const & other)
         {
-                if ( &other == this)
+                MSG("copy = operator");
+		if ( &other == this)
                         return *this;
                 // constructs a copy of other! increments the ref ctr
                 custom_shared_ptr<_Tp> tmp(other);
@@ -95,18 +95,15 @@ public:
         template<typename _Yp>
         custom_shared_ptr& operator=(custom_shared_ptr<_Yp> && other)
         {
-                // copy other into a temp;
-                custom_shared_ptr<_Yp> tmp (std::move(other));
+                
+		// copy other into a temp;
+                custom_shared_ptr<_Yp> tmp (std::forward(other));
                 tmp.data().swap(_data); // swap the temp with this -> calls std::share_ptr::swap(..);
                 this->_N = tmp._N;  /// don't forget to copy the sizes;
                 return *this;
         }
 
 
-        virtual ~custom_shared_ptr()
-        {
-		;
-	}
 
         /**
          * overload the suffix operator
