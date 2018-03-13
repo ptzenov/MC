@@ -1,0 +1,41 @@
+Vim is amazing 
+
+
+By: Petar Tzenov
+
+1) navigation:  h j k l  
+
+2) word navigation: w e b 
+
+3) repetitive typeing: #+i+[symbol/word]+ESC
+	example: 20 times my name: 20 i Petar Tzenov ESC 
+	result:Petar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar TzenovPetar Tzenov 
+
+4) find occurence of a character! f[char]
+
+5) % to toggle between start-end bracket ()
+
+6) 0 or $ to go to beginning or end of line
+
+7) find next occurence of the word under the cursor with * and the previous with #
+
+8) gg takes you to beginning of a File and  G to the end; go to line number with #G, example go to 13th line: 13G 
+
+9) searching text: type /[text]; navigate with n and N
+
+10) o to insert new line below and O above the current line
+
+11) x and X delete characters: petz pp
+
+12) use r to replace character (without inserting a new one) 
+
+13) d is the delete command. use with movement to delete larger chunks of buffer, e.g. dw deletes word:
+!Note that what is deleted is also coppied to vim so you can paset it with p later on); d2e deletes two 
+
+14) to repeat command press .
+
+15) visual mode with v:
+
+16) u for undo and ctrl+R for redo
+
+
