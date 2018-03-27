@@ -8,10 +8,7 @@
 
 #include <memory>
 #include <assert.h>
-#include <iostream>
 #include <vector>
-
-#include <utils/debug/macros.hpp>
 
 /****** Memory Management headers *********/
 namespace MC

@@ -9,7 +9,7 @@
 #include <iostream>
 
 #include <utils/memory.hpp>
-#include <utils/common.hpp>
+#include <utils/numeric.hpp>
 
 #include <plot/GNUplotter.hpp>
 

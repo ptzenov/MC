@@ -7,8 +7,8 @@
 #ifndef _SUBBAND_UTILS_HPP_
 #define _SUBBAND_UTILS_HPP_
 
-#include <cmath>
-#include <utils/constants.hpp>
+//#include <cmath>
+//#include <utils/constants.hpp>
 
 /********** lineshape functions **********/
 //

@@ -6,8 +6,9 @@
 #define _CHECKERS_HPP_
 
 #include <iostream>
+#include <assert.h>
 
-#define DIAGONAL (false) // should we enable diagonal scattering?
+#define _DIAGONAL_
 
 namespace MC
 {

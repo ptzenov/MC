@@ -14,7 +14,6 @@
 
 #include <utils/writer.hpp>
 #include <utils/constants.hpp>
-#include <utils/debug/macros.hpp>
 
 void monte_carlo_checkers()
 {
@@ -161,7 +160,6 @@ void sp_solve_calculate_and_plot()
 
 int main(int argc, char** argv)
 {
-
         sp_solve_calculate_and_plot();
         monte_carlo_randomwalk();
         monte_carlo_checkers();

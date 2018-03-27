@@ -4,8 +4,8 @@
 
 #include <subband/subband.hpp>
 #include <utils/constants.hpp>
-#include <utils/common.hpp>
-
+#include <utils/algorithms.hpp>
+#include <utils/numeric.hpp>
 
 #include <Eigen/Core> // Matrix and Array classes. Basic lin algebra 
 #include <Eigen/Eigenvalues> // eigenvalue eigenvector decompositions 
@@ -83,14 +83,14 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         // This part out of loop because of efficiency
 
         // Initialize the Hamiltonian's main and sub-diagonal
-        main_diagonal(0) = SQR(MC::hbar)/_meff(0)/(SQR(params.dz));
+        main_diagonal(0) = sqr(MC::hbar)/_meff(0)/(sqr(params.dz));
         for(auto  _idx = 1U; _idx < N; ++_idx)
         {
                 auto m_negative = (_meff(_idx)+_meff(_idx-1))/2.0;
                 auto m_postitive = (_meff(_idx)+_meff(_idx+1 == N ? N-1:_idx+1))/2.0;
-                main_diagonal(_idx) = SQR(MC::hbar)/2.0*(1.0/m_negative
-                                      +1.0/m_postitive)/SQR(params.dz);
-                sub_diagonal(_idx-1) = -(SQR(hbar)/2.0)*(1.0/m_negative)/SQR(params.dz);
+                main_diagonal(_idx) = sqr(MC::hbar)/2.0*(1.0/m_negative
+                                      +1.0/m_postitive)/sqr(params.dz);
+                sub_diagonal(_idx-1) = -(sqr(hbar)/2.0)*(1.0/m_negative)/sqr(params.dz);
         }
 
         while ((iternr < 20) && (Error >= params.dE)) // a maximal value for iterations should be defined
@@ -218,7 +218,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
 	// operator O and wave function WF
         auto op2 = [](double const & O , double const & WF)
         {
-                return O*SQR(WF); // operator 
+                return O*sqr(WF); // operator 
         };
 
         // need to COPY the EIGEN data to our own heap structure since EIGEN frees its memory!

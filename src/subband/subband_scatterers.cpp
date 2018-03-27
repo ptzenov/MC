@@ -1,6 +1,5 @@
 #include <subband/subband.hpp>
 #include <utils/constants.hpp>
-#include <utils/common.hpp>
 
 MC::LOphononScatterer::LOphononScatterer(std::vector<MC::SubbandState> const & states,
                 double E_LO): _E_LO(E_LO),

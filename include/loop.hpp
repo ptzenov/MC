@@ -6,11 +6,7 @@
 #ifndef _LOOP_HPP_
 #define _LOOP_HPP_
 
-#include <utils/common.hpp>
 #include <utils/random.hpp>
-
-
-#include <algorithm>
 #include <vector>
 #include <assert.h>
 
@@ -56,8 +52,8 @@ void main_loop(
         assert(Nt > 0);
         unsigned int num_states = std::distance(state_first,state_last);
         unsigned int num_particles = std::distance(occ_first,occ_last);
-        assert(num_particles > 0);
-        assert(num_particles <= num_states);
+        assert(num_particles > 0 && "zero particles initialized. Cannot continue.");
+        assert(num_particles <= num_states && "partile number grater than number of states. Cannot continue");
 
         std::vector<size_t> particle_dist(num_particles);
 

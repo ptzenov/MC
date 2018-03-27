@@ -7,8 +7,8 @@
 #define _WRITER_HPP_
 
 
-#include <iostream>
 #include <fstream>
+
 #include <assert.h>
 #include <exception>
 
@@ -24,13 +24,8 @@ void write_contiguous_array(ForwardIt first, ForwardIt last,
                             unsigned int cols, const char * filename, char mode = 'w')
 {
 
-        assert (first != last);
-        assert ( cols != 0);
-        if (mode == 'w')
-                std::cout <<"opening file "<< filename << " in write mode" << std::endl;
-        else
-                std::cout <<"opening file "<< filename << " in append mode" << std::endl;
-
+        assert (first != last && "No data to write. Cannot continue.");
+        assert ( cols != 0 && "number of columns = 0. Cannot continue.");
 
         std::fstream::ios_base::openmode _mode = (mode == 'w') ? std::ios_base::in : std::ios_base::app;
 

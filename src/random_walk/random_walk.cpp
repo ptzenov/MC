@@ -1,4 +1,3 @@
-#include <utils/common.hpp>
 #include <utils/random.hpp>
 #include <random_walk/random_walk.hpp>
 

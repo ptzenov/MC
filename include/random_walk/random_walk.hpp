@@ -7,8 +7,8 @@
 #ifndef _RANDOM_WALK_HPP_
 #define _RANDOM_WALK_HPP__
 
-#include <vector>
-#include <memory>
+#include <vector> // vector
+#include <memory> // unique_ptr
 
 #include <assert.h>
 

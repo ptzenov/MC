@@ -1,5 +1,4 @@
 #include <subband/subband.hpp>
-#include <utils/common.hpp>
 
 MC::Subband::Subband(MC::custom_shared_ptr<const double> z,
                      MC::custom_shared_ptr<const double> phi, unsigned int Npts,
