@@ -27,7 +27,7 @@ std::vector<std::string> tokenize(std::string str, std::string DELIMITER){
 	int ctr_0 =0;
 	bool tokenfound = false;
 
-	for(size_t i = 0; i< str.length(); ++i){
+	for(unsigned int i = 0; i< str.length(); ++i){
 		if(DELIMITER.find(str[i]) != std::string::npos){
 			if (!tokenfound){
 				v.push_back(str.substr(ctr_0,i-ctr_0));
@@ -75,10 +75,10 @@ std::vector<std::string>  getOptionFromFile(char* filename, std::string option){
 			std::vector<std::string> tokens = tokenize(line,DELIMITER);
 			if(tokens.size() !=0)
 				if( tokens[0].compare(option) == 0 ){
-					for (size_t i=1; i<tokens.size();i++)
+					for (unsigned int i=1; i<tokens.size();i++)
 						result.push_back(tokens[i]);
 					std::cout << "Option: " << option << " found. Value is:\n";
-					for (size_t i=0; i<result.size();i++)
+					for (unsigned int i=0; i<result.size();i++)
 						std::cout << result[i] << " ";
 					std::cout << "\n";
 					break;

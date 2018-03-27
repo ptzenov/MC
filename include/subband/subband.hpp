@@ -6,16 +6,17 @@
 #define _SUBBAND_HPP_
 
 // internal headers
-#include <state.hpp>
 #include <iostream>
 
 #include <utils/memory.hpp>
+#include <utils/common.hpp>
+
 #include <plot/GNUplotter.hpp>
 
 #include <vector>
 
 // eigen lib stuff
-#include <Eigen/Core> // Matrix and Array classes. Basic lin algebra 
+#include <Eigen/Core> // Matrix and Array classes. Basic lin algebra
 
 using MatrixNd = Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>;
 using VectorNd = Eigen::Matrix<double, Eigen::Dynamic, 1>;
@@ -33,7 +34,7 @@ private:
         MC::custom_shared_ptr<const double> _phi; // wave-funciton
 
         // number of grid points in z-direction
-        size_t _Npts;
+        unsigned int _Npts;
         // subband eigen-energy
         double _E;
         // centroid (coordinate) of the WF
@@ -42,17 +43,20 @@ private:
         double _meff;
 
 public:
-        Subband(MC::custom_shared_ptr<const double> z,
-                MC::custom_shared_ptr<const double> phi, size_t N,
+        // construc subband from shared pointers
+	Subband(MC::custom_shared_ptr<const double> z,
+                MC::custom_shared_ptr<const double> phi, unsigned int N,
                 double E, double centroid, double meff);
-        Subband(double* z, double* phi, size_t N, double E, double centroid,
+	// construct subband from raw pointers
+        Subband(double* z, double* phi, unsigned int N, double E, double centroid,
                 double meff);
 
-        // provide mixed constructors
+	// provide raw_ptr/shared_ptr constructor
         Subband(double* z, MC::custom_shared_ptr<const double> phi,
-                size_t N, double E, double centroid, double meff);
+                unsigned int N, double E, double centroid, double meff);
+	// provide shared_ptr/raw_ptr constructor
         Subband(MC::custom_shared_ptr<const double> z, double* phi,
-                size_t N, double E, double centroid, double meff);
+                unsigned int N, double E, double centroid, double meff);
 
         Subband() =  delete;
 
@@ -67,26 +71,41 @@ public:
         {
                 ;
         }
-
+	
+	// getter for the subband wave function
         MC::custom_shared_ptr<const double> const & PHI() const ;
-	MC::custom_shared_ptr<const double> const & z() const ;
- 
- 	double & E();
-        double & centroid();
-        double & meff();
+	
+	// getter for the growth axis coordinate
+      	MC::custom_shared_ptr<const double> const & z() const ;
+	// getter for the subband energy
+        inline double E() const
+        {
+                return _E;
+        }
+	// getter for the subband centroid 
+        inline double centroid() const
+        {
+                return _centroid;
+        }
+	//getter for the effective mass in growth direction
+        inline double meff() const
+        {
+                return _meff;
+        }
 };
 
-class SubbandState:public AbstractState
+class SubbandState
 {
 private:
         MC::Subband const & _subband;
         double _kx;
         double _ky;
         double _meff_xy;
-        size_t _idx;
+        unsigned int _idx;
 public:
+        // constructor of a subband state
         explicit SubbandState(MC::Subband& subband,
-                              double kx, double ky, double meff_xy, size_t idx);
+                              double kx, double ky, double meff_xy, unsigned int idx);
 
         SubbandState() = delete;
         SubbandState(SubbandState& other) = default;
@@ -97,12 +116,21 @@ public:
         {
                 ;
         }
-        
-	size_t idx() const;
+        // return the subband index
+        unsigned int idx() const;
+        // return momentum in x-direction
         double kx() const;
+        // return momentum in y-direction
         double ky() const;
+        // return effective mass in transverse direction
         double meff_xy() const;
         MC::Subband const & subband();
+
+        // getters for the subband state energy,
+        // the kinetiv energy and the total energy (subband+kinetic)
+        double E_subband() const;
+        double E_kin() const;
+        double E_tot() const;
 };
 
 /************** Subband scattering mechanisms *****************/
@@ -116,11 +144,16 @@ class LOphononScatterer
 private:
         // LO-phonon energy
         double _E_LO;
-        std::unique_ptr<double []> rates; // the precomputed rates
+        std::unique_ptr<double []> _rates_em; // the precomputed rates - LO-phonon emission
+        std::unique_ptr<double []> _rates_abs; // the precomputed rates - LO-phonon absorption
 public:
+        //Constructor for the LO-phonon scatterer
+        // @param states: all possible subband states
+        // @param E_LO: longitudinal optical phonon energy
         LOphononScatterer(std::vector<MC::SubbandState> const & states,
                           double E_LO);
-        bool operator()(MC::SubbandState&, MC::SubbandState&, size_t t);
+        // performs the scattering between the init and final states
+        bool operator()(MC::SubbandState& init, MC::SubbandState& fin, unsigned int t);
 };
 
 /*********
@@ -226,6 +259,7 @@ void plot_WF(GNUPlotter &plotter, VectorNd const &_z, VectorNd const &V_z,
              const int nrWF, MatrixNd const &Psi_z_out);
 };
 #endif
+
 
 
 

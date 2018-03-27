@@ -27,16 +27,17 @@
 #define C_CONJ(x) std::conj(x)
 #define ABS(X) (X>=0? X:-X)
 #define SQR(X) (X*X)
+#define DELTA(X) (X == 0? 1:0)
 
 
 namespace MC
 {
 
 template<typename ForwardIt,typename ElementComparator >
-std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N, ElementComparator comp)
+std::vector<unsigned int> partial_sort_idx(ForwardIt first, unsigned int middle, unsigned int N, ElementComparator comp)
 {
 
-        std::vector<size_t> idx(N);
+        std::vector<unsigned int> idx(N);
         std::iota(idx.begin(),idx.end(),0);
         struct IndexComparator
         {
@@ -62,9 +63,9 @@ std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N, E
 
 // get the index of the partial sorted elements in ForwardIt
 template<typename ForwardIt>
-std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N)
+std::vector<unsigned int> partial_sort_idx(ForwardIt first, unsigned int middle, unsigned int N)
 {
-        std::vector<size_t> idx(N);
+        std::vector<unsigned int> idx(N);
         std::iota(idx.begin(),idx.end(),0);
         struct IndexComparator
         {
@@ -81,7 +82,6 @@ std::vector<size_t> partial_sort_idx(ForwardIt first, size_t middle, size_t N)
         std::partial_sort(idx.begin(),idx.begin()+middle, idx.end(), IndexComparator {first} );
         return idx;
 }
-
 
 /*** Numeric functions ***/
 template<typename ForwardIt>

@@ -20,20 +20,25 @@ namespace MC
 /**
  *  A custom shared pointer class extending the std::shared_ptr
  *  in a way as to include memory management of
- *  arrays of _data of type _Tp. At initializaiton, specify the size of the
+ *  arrays of type _Tp. At initializaiton, specify the size of the
  *  array.
  *
  *  a) provides the operator[] implementation
  *  b) provides begin(), end() functions for iterators/stl algorithms
  *  c) provices .size()  getter for the object size;
  *
- */
+ *  d) it does not allow for direct de-referencing of the pointed-to object.
+ *  e) it does not allow initialization with custom_shared_ptr<type>(std::make_shared<type>(arg1,arg2), len);
+ *  f) it does not allow for initialization of arrays of shared poitners,
+ *  via a call: new custom_shared_pointer();
+ *  g) it does not allow any call to new custom_shared_pointer(); ....
+ **/
 template<typename _Tp>
 class custom_shared_ptr
 {
 private:
         std::shared_ptr<_Tp> _data;
-        size_t _N;
+        unsigned int _N;
         struct _deleter
         {
                 void operator()(_Tp* ptr)
@@ -43,18 +48,26 @@ private:
         };
 
 public:
+        // disable the void constructor -  disables call to: new custom_shared_ptr[N]();
+        custom_shared_ptr() = delete;
 
-        custom_shared_ptr() = delete;  // cant have the void constructor
-        explicit custom_shared_ptr(size_t len):
+        // disable heap management of custom_shared_ptr
+        static void* operator new(std::size_t size)  = delete;  // cant allocate on the heap
+        static void* operator new[](std::size_t size)  = delete;  // cant allocate arrays on the heap
+        void operator delete(void * ptr) = delete; // does not make sense also to call delete
+        void operator delete[](void *ptr) = delete; // does not make sense to call delete
+
+
+        // constructs an "empty" shared pointer to an array of size len
+        explicit custom_shared_ptr(unsigned int len):
                 _data (new _Tp[len],_deleter()), _N (len)
         {
         }
 
-
-        custom_shared_ptr(_Tp* raw_ptr, size_t len): _data(raw_ptr,_deleter()), _N(len)
+        // Potentially dangerous! if user does not specify correct len!
+        custom_shared_ptr(_Tp* raw_ptr, unsigned int len): _data(raw_ptr,_deleter()), _N(len)
         {
         }
-
 
         // copy constructor
         template<typename _Yp>
@@ -70,14 +83,10 @@ public:
         {
         }
 
-        /**
-         *
-         * copy assignement operator
-         */
+        // copy assignement operator
         template<typename _Yp>
         custom_shared_ptr& operator=(custom_shared_ptr<_Yp> const & other)
         {
-                MSG("copy = operator");
                 if ( &other == this)
                         return *this;
                 // constructs a copy of other! increments the ref ctr
@@ -89,13 +98,10 @@ public:
                 tmp.reset();
                 return *this;
         }
-        /**
-         * move assignment operator
-         */
+        // move assignment operator
         template<typename _Yp>
         custom_shared_ptr& operator=(custom_shared_ptr<_Yp> && other)
         {
-
                 // copy other into a temp;
                 custom_shared_ptr<_Yp> tmp (std::forward(other));
                 tmp.data().swap(_data); // swap the temp with this -> calls std::share_ptr::swap(..);
@@ -103,12 +109,8 @@ public:
                 return *this;
         }
 
-
-
-        /**
-         * overload the suffix operator
-         */
-        _Tp& operator[](size_t idx)
+        //suffix operator
+        _Tp& operator[](unsigned int idx)
         {
                 assert(idx < _N);
                 return *(_data.get()+idx);
@@ -118,45 +120,55 @@ public:
                 return _data.use_count();
         }
 
-        /**
-         *  Provide a begin and end functions for ranged based loops, stl algos etc.
-         * */
-        inline _Tp* begin()
+        //Provide a begin and end functions for ranged based loops, stl algos etc.
+        _Tp* begin()
         {
                 return _data.get();
         }
-        inline _Tp* end()
+        _Tp* end()
         {
                 return _data.get()+this->_N;
         }
 
-        inline _Tp* begin() const
+        _Tp* begin() const
         {
                 return _data.get();
         }
 
-        inline _Tp* end() const
+        _Tp* end() const
         {
                 return _data.get()+this->_N;
         }
 
+        void reset()
+        {
+                _data.reset();
+                _N = 0U;
+        }
 
-        inline const size_t & size() const
+        unsigned int size() const
         {
                 return _N;       // number of elements in the array
         }
-        inline const std::shared_ptr<_Tp> & data() const
+        const std::shared_ptr<_Tp> & data() const
         {
                 return _data;
         }
+        // overload conversion
+        explicit operator bool() const
+        {
+                return static_cast<bool>(_data);
+        }
 };
-// 
+
+
+//
 // Insert arbitrary number of variable sized arrays of T inside a vector containing custom_shared_ptr<T>
 // usage: recurrent_insert_homog_data(vec,first,N, ... variadic ...)
 // where variadic can be any (even) number of arguments coming in pairs:
 // ... Itarator first1, size_type N1,Itartor first2,size_type N2, Iterator first3, size_type N3 ...
 //  with first# pointing to the first element in the array # and N# specifying the array's length.
-// 
+//
 
 // end of the recurrsion
 template<typename T>
@@ -179,6 +191,7 @@ void recurrent_insert_homog_data(std::vector<MC::custom_shared_ptr<T>>& vec,Iter
 
 };
 #endif
+
 
 
 

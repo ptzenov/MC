@@ -5,7 +5,6 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
-
 void MC::material_properties(MC::Material &mat, double const E_g_Joule,
                              double const VBO_Joule, double const meff_kg,
                              const double abs_permittivity)

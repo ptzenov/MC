@@ -21,7 +21,7 @@ namespace MC
  */
 template<typename ForwardIt>
 void write_contiguous_array(ForwardIt first, ForwardIt last,
-                            size_t cols, const char * filename, char mode = 'w')
+                            unsigned int cols, const char * filename, char mode = 'w')
 {
 
         assert (first != last);
@@ -41,9 +41,9 @@ void write_contiguous_array(ForwardIt first, ForwardIt last,
         ForwardIt it = first;
         try
         {
-                for ( size_t i = 0; i < rows; ++i)
+                for ( unsigned int i = 0U; i < rows; ++i)
                 {
-                        for ( size_t j = 0; j < cols ; ++j)
+                        for ( unsigned int j = 0U; j < cols ; ++j)
                         {
                                 file << *it << " ";
                                 ++it;

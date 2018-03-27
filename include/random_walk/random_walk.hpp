@@ -1,52 +1,50 @@
 /**
  * file: subband/random_walk.hpp
- * Incorporates the main classes and utility functions 
+ * Incorporates the main classes and utility functions
  * for implementation of a random walk
  */
 
 #ifndef _RANDOM_WALK_HPP_
 #define _RANDOM_WALK_HPP__
 
-#include <state.hpp>
-
-
+#include <vector>
 #include <memory>
+
 #include <assert.h>
-#include <cmath>
 
 namespace MC
 {
 
 
-class RandomWalkState: public AbstractState
+class RandomWalkState
 {
 private:
-        size_t _dim;
+        unsigned int _dim;
         std::vector<double> _coords;
 
 public:
 
-        RandomWalkState(size_t dim);
+        RandomWalkState(unsigned int dim);
 
-	RandomWalkState(const RandomWalkState& other); 
-	RandomWalkState& operator=(const RandomWalkState& other); 
+        RandomWalkState(const RandomWalkState& other);
+        RandomWalkState& operator=(const RandomWalkState& other);
 
-	RandomWalkState(RandomWalkState&& other) = default; 
-	RandomWalkState& operator=(RandomWalkState&& other) = default; 
-	~RandomWalkState();
+        RandomWalkState(RandomWalkState&& other) = default;
+        RandomWalkState& operator=(RandomWalkState&& other) = default;
+        ~RandomWalkState();
 
-        inline double get_coord(size_t i) const
+        double get_coord(unsigned int i) const
         {
                 assert( i < _dim);
                 return _coords[i];
         }
-	
-	inline size_t get_dim() const
+
+        unsigned int get_dim() const
         {
                 return _dim;
         };
 
-	double& operator[](size_t idx);
+        double& operator[](unsigned int idx);
 };
 
 /***
@@ -59,23 +57,27 @@ class BrownianRecord
 {
 
 private:
-        size_t _dim;
-        size_t	_Nt;
-	        
-	std::unique_ptr<double[]> _data ;
-	std::unique_ptr<double[]> _sum;
-        
-	size_t _ctr; 
+        unsigned int _dim;
+        unsigned int	_Nt;
+
+        std::unique_ptr<double[]> _data ;
+        std::unique_ptr<double[]> _sum;
+
+        unsigned int _ctr;
 public:
-        BrownianRecord(size_t dim, size_t N_t);
-        void post_process(RandomWalkState&, RandomWalkState&,bool,size_t);
-	inline double const * get_data() {return _data.get();}
+        BrownianRecord(unsigned int dim, unsigned int N_t);
+        void post_process(RandomWalkState&, RandomWalkState&,bool,unsigned int);
+        double const * get_data()
+        {
+                return _data.get();
+        }
 };
 
-bool random_step(RandomWalkState&,RandomWalkState&, size_t);
+bool random_step(RandomWalkState&,RandomWalkState&, unsigned int);
 
 }
 
 #endif
+
 
 

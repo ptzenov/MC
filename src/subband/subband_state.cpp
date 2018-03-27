@@ -2,7 +2,7 @@
 #include <utils/common.hpp>
 
 MC::Subband::Subband(MC::custom_shared_ptr<const double> z,
-                     MC::custom_shared_ptr<const double> phi, size_t Npts,
+                     MC::custom_shared_ptr<const double> phi, unsigned int Npts,
                      double E, double centroid, double meff): _z(z), _phi(phi), _Npts(Npts),
         _E(E),  _centroid(centroid), _meff(meff)
 {
@@ -10,7 +10,7 @@ MC::Subband::Subband(MC::custom_shared_ptr<const double> z,
 }
 
 
-MC::Subband::Subband(double* z, double* phi, size_t Npts,
+MC::Subband::Subband(double* z, double* phi, unsigned int Npts,
                      double E, double centroid, double meff):
         _z(z,Npts), _phi(phi,Npts), _Npts(Npts), _E(E),  _centroid(centroid), _meff(meff)
 {
@@ -18,13 +18,13 @@ MC::Subband::Subband(double* z, double* phi, size_t Npts,
 }
 
 MC::Subband::Subband(double* z, MC::custom_shared_ptr<const double> phi,
-                     size_t Npts, double E, double centroid, double meff):_z(z,Npts),
+                     unsigned int Npts, double E, double centroid, double meff):_z(z,Npts),
         _phi(phi),_Npts(Npts),_E(E),_centroid(centroid), _meff(meff)
 {
         ;
 }
 MC::Subband::Subband(MC::custom_shared_ptr<const double> z, double* phi,
-                     size_t Npts, double E, double centroid, double meff): _z(z),
+                     unsigned int Npts, double E, double centroid, double meff): _z(z),
         _phi(phi,Npts), _Npts(Npts), _E(E), _centroid(centroid),_meff(meff)
 {
         ;
@@ -38,29 +38,18 @@ MC::custom_shared_ptr<const double> const & MC::Subband::z() const
 {
         return _z;
 }
-double & MC::Subband::E()
-{
-        return _E;
-}
-double & MC::Subband::centroid()
-{
-        return _centroid;
-}
-double & MC::Subband::meff()
-{
-        return _meff;
-}
 
 
-/********************** SubbandState ***********************/
+/******************** SubbandState ********************/
+
 MC::SubbandState::SubbandState(MC::Subband& subband,
-                               double kx, double ky, double meff_xy, size_t idx): _subband(subband),
+                               double kx, double ky, double meff_xy, unsigned int idx): _subband(subband),
         _kx(kx),_ky(ky),_meff_xy(meff_xy), _idx(idx)
 {
         ;
 }
 
-size_t MC::SubbandState::idx() const
+unsigned int MC::SubbandState::idx() const
 {
         return _idx;
 }
@@ -84,6 +73,5 @@ MC::Subband const & MC::SubbandState::subband()
 {
         return _subband;
 }
-
-
+/******************** End SubbandState ********************/
 

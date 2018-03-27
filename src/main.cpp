@@ -18,14 +18,13 @@
 
 void monte_carlo_checkers()
 {
-        size_t Nt = 10000;
-        size_t num_particles = 1;
+        unsigned int Nt = 10;
+        unsigned int num_particles = 10;
 
-        size_t Nx = 10;
-        size_t Ny = 10;
+        unsigned int Nx = 10;
+        unsigned int Ny = 10;
 
         std::vector<MC::CheckersState> states;
-
         for (auto x= 0U; x <Nx; ++x)
                 for (auto y=0U; y< Ny; ++y)
                         states.push_back(MC::CheckersState(x,y));
@@ -34,35 +33,58 @@ void monte_carlo_checkers()
         std::vector<MC::CheckersScatterer> scatterers;
         scatterers.push_back(scatterer);
 
-        MC::main_loop(states.begin(),states.end(),scatterers,
+        //*** initial particle distribution *** //
+
+        std::vector<unsigned int > particle_dist(num_particles);
+        std::vector<unsigned int> state_ids(Nx*Ny);
+        // randomly populate the states with num_particles , particles
+        std::iota(state_ids.begin(),state_ids.end(),0);
+        MC::draw_without_replacement(state_ids.begin(),state_ids.end(),
+                                     particle_dist.begin(),num_particles);
+        // occupy
+        for( auto loc : particle_dist)
+        {
+                states[loc].add_particle();
+        }
+
+        MC::main_loop(states.begin(),
+                      states.end(),
+                      particle_dist.begin(),
+		      particle_dist.end(),
+                      scatterers,
                       record,
-                      num_particles, Nt);
+                      Nt);
 }
 
 void monte_carlo_randomwalk()
 {
-        size_t Nt = 10000;
-        size_t num_particles = 1;
-        size_t dim = 2;
+        unsigned int Nt = 10000;
+        unsigned int dim = 2;
 
         std::vector<MC::RandomWalkState> states;
-        states.push_back(MC::RandomWalkState {2});
+        states.push_back(MC::RandomWalkState {dim});
+        std::vector<unsigned int> particle_dist;
+        particle_dist.push_back(0);
 
-        using scatterer_func = bool(*)(MC::RandomWalkState&, MC::RandomWalkState&, size_t t);
+        using scatterer_func = bool(*)(MC::RandomWalkState&, MC::RandomWalkState&, unsigned int t);
         std::vector<scatterer_func> scatterers;
         scatterers.push_back(MC::random_step);
 
         MC::BrownianRecord record {dim,Nt};
-        MC::main_loop(states.begin(),states.end(),scatterers,
+        MC::main_loop(states.begin(),
+		      states.end(),
+                      particle_dist.begin(),
+                      particle_dist.end(),
+                      scatterers,
                       record,
-                      num_particles, Nt);
+                      Nt);
 
         GNUPlotter plotter {};
 
         plotter.set_line_color("#FF0000");
         plotter.set_line_specifier("lines");
         plotter.set_line_width(1.2);
-        plotter.plot(record.get_data(),dim, Nt);
+        plotter.plot(record.get_data(),dim, Nt); // dangerous
         std::cout<<"Bubye"<<"\n";
 }
 
@@ -118,8 +140,8 @@ void sp_solve_calculate_and_plot()
 
         std::vector<MC::Subband> subbands =
                 MC::sp_solve(layers, params);
-        
-	// write reuslts to file?
+
+        // write reuslts to file?
         auto idx = 0;
         const char* filename = "results.txt";
         auto now = std::chrono::system_clock::now();
@@ -129,7 +151,7 @@ void sp_solve_calculate_and_plot()
         {
                 //get the wave funciton
                 auto& WF = subband.PHI();
-       		MC::write_meta_data("IDX = ",idx++,filename,'a');
+                MC::write_meta_data("IDX = ",idx++,filename,'a');
                 auto Npts = std::distance(std::begin(WF),std::end(WF));
                 MC::write_meta_data("npts = " , Npts, filename ,'a');
                 MC::write_contiguous_array(std::begin(WF),std::end(WF),Npts,filename,'a');
@@ -141,9 +163,14 @@ int main(int argc, char** argv)
 {
 
         sp_solve_calculate_and_plot();
+        monte_carlo_randomwalk();
+        monte_carlo_checkers();
+        std::cout<< "Done" << std::endl;
 
-	std::cout<< "Done" << std::endl;
-
-	return 1;
+        return 1;
 }
+
+
+
+
 

@@ -21,7 +21,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
 
         double Error = 1.0f;
         int iternr = 1; // iteration number of while-loop
-        size_t N = std::accumulate(std::begin(layers),std::end(layers),0,[&params]( int& init,
+        unsigned int N = std::accumulate(std::begin(layers),std::end(layers),0,[&params]( int& init,
                                    MC::Layer const& layer)
         {
                 return init += std::round(layer.thickness/params.dz);
@@ -214,9 +214,11 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         {
                 return acc+params.dz*b;
         };
-        auto op2 = [](double const & mass, double const & WF)
+
+	// operator O and wave function WF
+        auto op2 = [](double const & O , double const & WF)
         {
-                return mass*SQR(WF);
+                return O*SQR(WF); // operator 
         };
 
         // need to COPY the EIGEN data to our own heap structure since EIGEN frees its memory!
@@ -229,8 +231,8 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         {
                 double * Psi_on_heap = new double[N];
                 std::copy(Psi_z.col(col).data(), Psi_z.col(col).data()+N,Psi_on_heap);
-
-                double effmass = std::inner_product(_meff.data(),_meff.data()+N,
+                
+		double effmass = std::inner_product(_meff.data(),_meff.data()+N,
                                                     Psi_on_heap,0,op1,op2);
                 double centroid = std::inner_product(std::begin(shared_z),std::end(shared_z),
                                                      Psi_on_heap,0,op1,op2);

@@ -5,14 +5,14 @@
 #include <utils/random.hpp>
 #include <checkers/checkers.hpp>
 
-bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersState& fin, size_t t)
+bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersState& fin, unsigned int t)
 {
 	// do not change anything !
         if ( &init == &fin)
                 return false;
 
         // can only go on un_occupied state!
-        if(fin.get_pID() != EMPTY )
+        if(!fin.empty())
                 return false;
 
         double s_prob = 0.0;
@@ -77,9 +77,8 @@ bool MC::CheckersScatterer::operator()(MC::CheckersState& init, MC::CheckersStat
         //draw a uniform random num from 0 to 1 over 1000 bins
         if (draw_random_uniform_double<std::mt19937,double>(0.,1.) < s_prob)
         {
-		auto tmp = init.get_pID(); 
-		init.set_pID(fin.get_pID());
-		fin.set_pID(tmp);
+		init.remove_particle();
+		fin.add_particle();
 		return true;
         }
         return false;
