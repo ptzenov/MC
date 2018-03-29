@@ -45,14 +45,12 @@ void monte_carlo_checkers()
         {
                 states[loc].add_particle();
         }
-
         MC::main_loop(states.begin(),
                       states.end(),
                       particle_dist.begin(),
 		      particle_dist.end(),
                       scatterers,
-                      record,
-                      Nt);
+		      Nt, record);
 }
 
 void monte_carlo_randomwalk()
@@ -75,9 +73,7 @@ void monte_carlo_randomwalk()
                       particle_dist.begin(),
                       particle_dist.end(),
                       scatterers,
-                      record,
-                      Nt);
-
+                      Nt, record);
         GNUPlotter plotter {};
 
         plotter.set_line_color("#FF0000");
@@ -150,7 +146,7 @@ void sp_solve_calculate_and_plot()
         {
                 //get the wave funciton
                 auto& WF = subband.PHI();
-                MC::write_meta_data("IDX = ",idx++,filename,'a');
+		MC::write_meta_data("IDX = ",idx++,filename,'a');
                 auto Npts = std::distance(std::begin(WF),std::end(WF));
                 MC::write_meta_data("npts = " , Npts, filename ,'a');
                 MC::write_contiguous_array(std::begin(WF),std::end(WF),Npts,filename,'a');

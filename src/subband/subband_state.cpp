@@ -1,7 +1,15 @@
 #include <subband/subband.hpp>
 
-MC::Subband::Subband(MC::custom_shared_ptr<const double> z,
-                     MC::custom_shared_ptr<const double> phi, unsigned int Npts,
+// destructor
+MC::Subband::~Subband()
+{
+        ;
+}
+
+/********** various constructors **********/
+
+MC::Subband::Subband(MC::shared_array_ptr<const double> z,
+                     MC::shared_array_ptr<const double> phi, unsigned int Npts,
                      double E, double centroid, double meff): _z(z), _phi(phi), _Npts(Npts),
         _E(E),  _centroid(centroid), _meff(meff)
 {
@@ -16,24 +24,24 @@ MC::Subband::Subband(double* z, double* phi, unsigned int Npts,
         ;
 }
 
-MC::Subband::Subband(double* z, MC::custom_shared_ptr<const double> phi,
+MC::Subband::Subband(double* z, MC::shared_array_ptr<const double> phi,
                      unsigned int Npts, double E, double centroid, double meff):_z(z,Npts),
         _phi(phi),_Npts(Npts),_E(E),_centroid(centroid), _meff(meff)
 {
         ;
 }
-MC::Subband::Subband(MC::custom_shared_ptr<const double> z, double* phi,
+MC::Subband::Subband(MC::shared_array_ptr<const double> z, double* phi,
                      unsigned int Npts, double E, double centroid, double meff): _z(z),
         _phi(phi,Npts), _Npts(Npts), _E(E), _centroid(centroid),_meff(meff)
 {
         ;
 }
 
-MC::custom_shared_ptr<const double> const & MC::Subband::PHI() const
+MC::shared_array_ptr<const double> const & MC::Subband::PHI() const
 {
         return _phi;
 }
-MC::custom_shared_ptr<const double> const & MC::Subband::z() const
+MC::shared_array_ptr<const double> const & MC::Subband::z() const
 {
         return _z;
 }

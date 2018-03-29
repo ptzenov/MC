@@ -66,7 +66,14 @@ private:
         unsigned int _ctr;
 public:
         BrownianRecord(unsigned int dim, unsigned int N_t);
-        void post_process(RandomWalkState&, RandomWalkState&,bool,unsigned int);
+	BrownianRecord(BrownianRecord const & other )  = delete; 
+	BrownianRecord& operator=(BrownianRecord const & other )  = delete;
+
+	BrownianRecord(BrownianRecord && other )  = default; 
+	BrownianRecord& operator=(BrownianRecord && other )  = default; 
+	
+	
+	void post_process(RandomWalkState&, RandomWalkState&,bool,unsigned int);
         double const * get_data()
         {
                 return _data.get();

@@ -14,14 +14,17 @@ namespace MC
 {
 /**
  * this is the main iteration loop
- * template arguments are (Random Iterator, a Scatterer type (function/functor that scaters states)
- * and an recorder struct responsible for post-processing the scattering event,
- * i.e. recording sm data/displaying results etc.)
+ * template arguments are (RandomIt - random iterator concept, ForwardIt - forward iterator concept, 
+ * ,Scatterer - scatterer type (function/functor that scaters states) and lastly Recorder - 
+ * and an recorder struct/function responsible for post-processing the scattering event -> if no post-processing
+ * is desired can be set to zero( or omitted whatsoever from the parameter and template list)
  * The parameters are:
  * @param state_first - a RandomIt pointing to the first state from the set
  * @param state_last - a RandomIt pointing PAST the last state from the set
  * @param occ_first - a Forward it pointing to the first occupied state
  * @param occ_last - a Forward it pointing PAST the last occupied state
+ * ! Note that the number of particles is simply std::distance(occ_first,occ_last) and furthermore that after 
+ *  the loop is finished the particle distribution will be stored in this container. 
  *
  * @param  scatterers - a vector<Scatterer> of various possible scattering mechanisms for the simulation.
  * Prior to each scattering event, a scattering mechanism of the type Scatterer is randomly selected from
@@ -29,11 +32,11 @@ namespace MC
  * bool	scatter(T& init,T& fin,unsigned int t);
  * , where init and fin are the states (of type T) to be scattered; Returns true if the scattering from init
  * to fin was successful.
+ * @param Nt number of iterations
  * @param recorder a pointer to a Recorder function/functor which has the following signature
  *	Recorder(T& init, T& init, bool scattered, unsigned int t);
  * with init and fin the initial and final state, scattered a parameter specifying whether the scattering
- * mechanism selected returned true
- * @param Nt number of iterations
+ * mechanism selected returned true. 
  */
 template<class RandomIt, class ForwardIt, typename Scatterer, typename Recorder>
 void main_loop(
@@ -44,8 +47,8 @@ void main_loop(
                ForwardIt occ_last,
                // scattering mechanisms
                std::vector<Scatterer> scatterers,
-               Recorder& recorder,
-               unsigned int Nt
+               unsigned int Nt,
+               Recorder& recorder
              )
 {
         // some checks
@@ -79,8 +82,8 @@ void main_loop(
                         if(scattered)
                                 *loc = fin_loc; // record the new place for the particle ...
                         // record something... if needed
-                        recorder.post_process(initstate,finstate,scattered,t);
-                }
+			recorder.post_process(initstate,finstate,scattered,t);
+     		}
         }
 }
 }

@@ -224,7 +224,7 @@ MC::sp_solve(std::vector<MC::Layer> const & layers,  const MC::SimParams& params
         // need to COPY the EIGEN data to our own heap structure since EIGEN frees its memory!
         double * z_on_heap = new double[N];
         std::copy(_z.data(),_z.data()+N,z_on_heap);
-        MC::custom_shared_ptr<double> shared_z {z_on_heap,N};
+        MC::shared_array_ptr<double> shared_z {z_on_heap,N};
 
         std::vector<MC::Subband>	subbands;
         for (auto col = 0U; col < Psi_z.cols(); ++col)

@@ -30,8 +30,8 @@ class Subband
 private:
         // double -> real
         // !!! Make const to prevent modifications on the shared resource!
-        MC::custom_shared_ptr<const double> _z; // z-grid
-        MC::custom_shared_ptr<const double> _phi; // wave-funciton
+        MC::shared_array_ptr<const double> _z; // z-grid
+        MC::shared_array_ptr<const double> _phi; // wave-funciton
 
         // number of grid points in z-direction
         unsigned int _Npts;
@@ -44,18 +44,18 @@ private:
 
 public:
         // construc subband from shared pointers
-	Subband(MC::custom_shared_ptr<const double> z,
-                MC::custom_shared_ptr<const double> phi, unsigned int N,
+	Subband(MC::shared_array_ptr<const double> z,
+                MC::shared_array_ptr<const double> phi, unsigned int N,
                 double E, double centroid, double meff);
 	// construct subband from raw pointers
         Subband(double* z, double* phi, unsigned int N, double E, double centroid,
                 double meff);
 
 	// provide raw_ptr/shared_ptr constructor
-        Subband(double* z, MC::custom_shared_ptr<const double> phi,
+        Subband(double* z, MC::shared_array_ptr<const double> phi,
                 unsigned int N, double E, double centroid, double meff);
 	// provide shared_ptr/raw_ptr constructor
-        Subband(MC::custom_shared_ptr<const double> z, double* phi,
+        Subband(MC::shared_array_ptr<const double> z, double* phi,
                 unsigned int N, double E, double centroid, double meff);
 
         Subband() =  delete;
@@ -67,28 +67,26 @@ public:
 
         Subband& operator=(const Subband & other) = default;
         Subband& operator=(Subband&& other)= default ;
-        ~Subband()
-        {
-                ;
-        }
-	
+        ~Subband();	
+
 	// getter for the subband wave function
-        MC::custom_shared_ptr<const double> const & PHI() const ;
+        MC::shared_array_ptr<const double> const & PHI() const ;
 	
 	// getter for the growth axis coordinate
-      	MC::custom_shared_ptr<const double> const & z() const ;
+      	MC::shared_array_ptr<const double> const & z() const ;
+
 	// getter for the subband energy
-        inline double E() const
+        double E() const
         {
                 return _E;
         }
 	// getter for the subband centroid 
-        inline double centroid() const
+        double centroid() const
         {
                 return _centroid;
         }
 	//getter for the effective mass in growth direction
-        inline double meff() const
+        double meff() const
         {
                 return _meff;
         }
