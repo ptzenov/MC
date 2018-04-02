@@ -110,11 +110,8 @@ public:
         SubbandState(SubbandState&& other) = default;
         SubbandState& operator=(SubbandState& other) = default;
         SubbandState& operator=(SubbandState&& other) = default;
-        ~SubbandState()
-        {
-                ;
-        }
-        // return the subband index
+        ~SubbandState(){;}
+	// return the subband index
         unsigned int idx() const;
         // return momentum in x-direction
         double kx() const;

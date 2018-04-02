@@ -5,7 +5,14 @@ MC::LOphononScatterer::LOphononScatterer(std::vector<MC::SubbandState> const & s
                 double E_LO): _E_LO(E_LO),
         _rates_em {new double[(states.size()* states.size())]},	_rates_abs {new double[(states.size()* states.size())]}
 {
-;
+	for (auto & state_i : states)
+	{
+		for(auto & state_f: states) 
+		{
+		
+		
+		}
+	}
 }
 
 bool MC::LOphononScatterer::operator()(MC::SubbandState& init, MC::SubbandState& fin, unsigned int t)

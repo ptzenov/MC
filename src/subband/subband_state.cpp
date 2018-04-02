@@ -1,5 +1,5 @@
 #include <subband/subband.hpp>
-
+#include <utils/constants.hpp>
 // destructor
 MC::Subband::~Subband()
 {
@@ -79,6 +79,21 @@ double MC::SubbandState::meff_xy() const
 MC::Subband const & MC::SubbandState::subband()
 {
         return _subband;
+}
+
+double MC::SubbandState::E_subband() const
+{
+	return _subband.E(); 
+}
+
+double MC::SubbandState::E_kin() const 
+{
+	return MC::sqr(MC::hbar)*(MC::sqr(_kx)+MC::sqr(_ky))/2*_meff_xy;
+}
+
+double MC::SubbandState::E_tot() const 
+{
+	return E_subband() + E_kin(); 
 }
 /******************** End SubbandState ********************/
 
