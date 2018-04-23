@@ -4,9 +4,10 @@
  */
 #ifndef _SUBBAND_HPP_
 #define _SUBBAND_HPP_
-
 // internal headers
 #include <iostream>
+
+
 
 #include <utils/memory.hpp>
 #include <utils/numeric.hpp>
@@ -14,7 +15,6 @@
 #include <plot/GNUplotter.hpp>
 
 #include <vector>
-
 // eigen lib stuff
 #include <Eigen/Core> // Matrix and Array classes. Basic lin algebra
 
@@ -23,69 +23,62 @@ using VectorNd = Eigen::Matrix<double, Eigen::Dynamic, 1>;
 
 namespace MC
 {
-
 //is it ok to be double ?
 class Subband
 {
 private:
-        // double -> real
-        // !!! Make const to prevent modifications on the shared resource!
+// double -> real
+// !!! Make const to prevent modifications on the shared resource!
         MC::shared_array_ptr<const double> _z; // z-grid
         MC::shared_array_ptr<const double> _phi; // wave-funciton
-
-        // number of grid points in z-direction
+// number of grid points in z-direction
         unsigned int _Npts;
-        // subband eigen-energy
+// subband eigen-energy
         double _E;
-        // centroid (coordinate) of the WF
+// centroid (coordinate) of the WF
         double _centroid;
-        // weighted average of the subband effective mass parallel to the growth direction
+// weighted average of the subband effective mass parallel to the growth direction
         double _meff;
 
 public:
-        // construc subband from shared pointers
+	
+        Subband() =  delete;
+// construc subband from shared pointers
 	Subband(MC::shared_array_ptr<const double> z,
                 MC::shared_array_ptr<const double> phi, unsigned int N,
                 double E, double centroid, double meff);
-	// construct subband from raw pointers
+// construct subband from raw pointers
         Subband(double* z, double* phi, unsigned int N, double E, double centroid,
                 double meff);
-
-	// provide raw_ptr/shared_ptr constructor
+// provide raw_ptr/shared_ptr constructor
         Subband(double* z, MC::shared_array_ptr<const double> phi,
                 unsigned int N, double E, double centroid, double meff);
-	// provide shared_ptr/raw_ptr constructor
+// provide shared_ptr/raw_ptr constructor
         Subband(MC::shared_array_ptr<const double> z, double* phi,
                 unsigned int N, double E, double centroid, double meff);
 
-        Subband() =  delete;
-
-
-        // copy constructors!
+// copy constructors!
         Subband(const Subband & other) = default;
         Subband(Subband&& other)= default;
 
         Subband& operator=(const Subband & other) = default;
         Subband& operator=(Subband&& other)= default ;
         ~Subband();	
-
-	// getter for the subband wave function
+// getter for the subband wave function
         MC::shared_array_ptr<const double> const & PHI() const ;
-	
-	// getter for the growth axis coordinate
+// getter for the growth axis coordinate
       	MC::shared_array_ptr<const double> const & z() const ;
-
-	// getter for the subband energy
+// getter for the subband energy
         double E() const
         {
                 return _E;
         }
-	// getter for the subband centroid 
+// getter for the subband centroid 
         double centroid() const
         {
                 return _centroid;
         }
-	//getter for the effective mass in growth direction
+//getter for the effective mass in growth direction
         double meff() const
         {
                 return _meff;
@@ -101,7 +94,7 @@ private:
         double _meff_xy;
         unsigned int _idx;
 public:
-        // constructor of a subband state
+// constructor of a subband state
         explicit SubbandState(MC::Subband& subband,
                               double kx, double ky, double meff_xy, unsigned int idx);
 
@@ -111,18 +104,17 @@ public:
         SubbandState& operator=(SubbandState& other) = default;
         SubbandState& operator=(SubbandState&& other) = default;
         ~SubbandState(){;}
-	// return the subband index
+// return the subband index
         unsigned int idx() const;
-        // return momentum in x-direction
+// return momentum in x-direction
         double kx() const;
-        // return momentum in y-direction
+// return momentum in y-direction
         double ky() const;
-        // return effective mass in transverse direction
+// return effective mass in transverse direction
         double meff_xy() const;
         MC::Subband const & subband();
-
-        // getters for the subband state energy,
-        // the kinetiv energy and the total energy (subband+kinetic)
+// getters for the subband state energy,
+// the kinetiv energy and the total energy (subband+kinetic)
         double E_subband() const;
         double E_kin() const;
         double E_tot() const;
@@ -137,17 +129,17 @@ public:
 class LOphononScatterer
 {
 private:
-        // LO-phonon energy
+// LO-phonon energy
         double _E_LO;
         std::unique_ptr<double []> _rates_em; // the precomputed rates - LO-phonon emission
         std::unique_ptr<double []> _rates_abs; // the precomputed rates - LO-phonon absorption
 public:
-        //Constructor for the LO-phonon scatterer
-        // @param states: all possible subband states
-        // @param E_LO: longitudinal optical phonon energy
+//Constructor for the LO-phonon scatterer
+// @param states: all possible subband states
+// @param E_LO: longitudinal optical phonon energy
         LOphononScatterer(std::vector<MC::SubbandState> const & states,
                           double E_LO);
-        // performs the scattering between the init and final states
+// performs the scattering between the init and final states
         bool operator()(MC::SubbandState& init, MC::SubbandState& fin, unsigned int t);
 };
 
@@ -156,7 +148,6 @@ public:
  * IR scatterrer
  *
  *********/
-
 // TODO
 
 
@@ -166,7 +157,6 @@ public:
  * Impurity scatterrer
  *
  *********/
-
 // TODO
 
 
@@ -175,7 +165,6 @@ public:
  * LA-phonon scatterrer
  *
  *********/
-
 // TODO
 
 
@@ -184,7 +173,6 @@ public:
  * e-e scatterrer
  *
  *********/
-
 // TODO
 
 
@@ -193,7 +181,6 @@ public:
  * optical-field scatterrer
  *
  *********/
-
 // TODO
 
 
@@ -203,7 +190,6 @@ public:
  * resonant-tunneling  scatterrer
  *
  *********/
-
 // TODO
 
 

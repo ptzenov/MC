@@ -1,0 +1,63 @@
+\documentclass[10pt,twoside, a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{graphics}
+\usepackage{braket}
+\usepackage{color}
+
+
+%      u_j-1    uj   uj+1
+%  ---- D ------ D --D -----D
+%
+
+
+\begin{document}
+\title{LO-phonon scattering}
+\author{Petar Tzenov}
+\date{\today}
+\maketitle
+\section{Phonons in 1D}
+
+Assume a chain of identical atoms, each of mass $m$, separated in equilibrium by distance  $a$. The displacement 
+of the $j^{th}$ atom from its equilibrium position $u_i$ is governed by Newton's law 
+\begin{equation}
+m \frac{d^2 u_j}{dt^2} = K(u_{j-1}-u_{j}) - K(u_{j}-u_{j+1})
+\end{equation}
+
+%sin = (exp(ix)-exp(-ix))/2 ^2
+%   = (exp(2ix) - 2 + exp(-2ix)) / 4
+% 4sin(x/2)^2 = exp(ix)-2+exp(-ix);
+% but 2sin(x/2)^2 = 1-cos(x)
+
+One might expect a solution in the form $u_j(x,t) = A_j e^{i(q x_j - \omega_q t)}$. Substituting in the equation above we 
+obtain an equation for the wavenumber  $q$ and the oscillation frequency $\omega_q$
+\begin{align}
+- m \omega_q^2 e^{i(q ja - \omega_q t)} &= K e^{i(q (j-1) a-\omega_q t)} [1-2e^{iqa} + e^{2iqa}] \\
+&\Leftrightarrow \nonumber \\
+-m \omega_q^2 &= K [e^{-iqa}-2 + e^{iqa}] \\
+&\Leftrightarrow \nonumber \\
+-m \omega_q^2 &= 4K \sin(\frac{qa}{2})^2 = 2K(1-\cos(qa))
+\end{align}
+This gives us the wave number - frequency dispersion relation 
+\begin{align}
+\label{eq:atomic_chain_disprel}
+\omega_q = 2 \sqrt{\frac{K}{m}} |\sin(\frac{qa}{2})|
+\end{align}
+
+Aparently (See [Davies LowDim]) the wavenumber $q$ must be restricted (as for electrons) to the first Brilluin zone,
+i.e. $q\in[-\frac{\pi}{a};\frac{\pi}{a}]$. We also see that for small values of $q$, the dispersion relation is approximately linear, since 
+$\sin(qa/2) \approx qa/2$. This allows us to obtian the "sound velocity" of vibration, and for small $q$ it thus follows
+\begin{equation}
+\omega_q \approx a\sqrt{\frac{K}{m}} q = v_s q,
+\end{equation} 
+where $v_s = a\sqrt{K/m}$.
+
+
+
+%sin = (exp(ix)-exp(-ix))/2 ^2
+%   = (exp(2ix) - 2 + exp(-2ix)) / 4
+% 4sin(x/2)^2 = exp(ix)-2+exp(-ix);
+% but 2sin(x/2)^2 = 1-cos(x)
+\end{document}
+
+

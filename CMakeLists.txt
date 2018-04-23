@@ -11,27 +11,20 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra -std=c++11")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-Ofast") # optimize for speed 
 
-#compiler?
-set(CMAKE_CXX "g++")
+
+#the management of all dependencies is delegated to conanfile.txt  
+#conan BEGIN
+include("${CMAKE_BINARY_DIR}/conanbuildinfo.cmake") 
+conan_basic_setup() # this is for conan-specific configuration 
+#conan END
 
 
-# modify to your own custom directory 
-set(EIGEN_ROOT "/usr/local/include/eigen3")
-
-#all headers
+#additional headers 
 include_directories(
 	"include"
-	${EIGEN_ROOT}
-	)
-
-#custom link directories
-link_directories(
-	"lib"
 	)
 #source files
-file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.c")
  
 add_executable(MC01 ${SOURCES})
-
-#target_link_libraries(MC01 "libname")
 
